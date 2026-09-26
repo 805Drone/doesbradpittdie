@@ -132,6 +132,12 @@ def header(depth: int = 0) -> str:
     </button>
   </nav>
 </header>
+<nav class="tabbar" aria-label="Quick actions">
+  <a href="{base}#films"><span class="tb-ico" aria-hidden="true">▦</span>Archive</a>
+  <a href="{base}stats/"><span class="tb-ico" aria-hidden="true">▤</span>Ledger</a>
+  <a href="{base}?surprise=1" data-surprise-link><span class="tb-ico" aria-hidden="true">✦</span>Surprise</a>
+  <button type="button" data-seal-toggle aria-pressed="false"><span class="tb-ico" aria-hidden="true">◈</span><span class="when-sealed">Reveal all</span><span class="when-revealed">Seal all</span></button>
+</nav>
 <main id="main">
 """
 
@@ -166,6 +172,15 @@ FEATURED = [
     "heart-of-the-beast", "burn-after-reading", "kalifornia", "a-river-runs-through-it",
 ]
 SPOTLIGHT = ["once-upon-a-time-in-hollywood", "fight-club", "fury", "seven", "troy", "f1"]
+# where Pitt is in each spotlight still (object-position), so portrait crops keep him in frame
+SPOTLIGHT_FOCUS = {
+    "once-upon-a-time-in-hollywood": "82% 40%",
+    "fight-club": "48% 45%",
+    "fury": "52% 45%",
+    "seven": "40% 35%",
+    "troy": "50% 40%",
+    "f1": "47% 25%",
+}
 
 
 def card(f: dict) -> str:
@@ -221,7 +236,7 @@ def spotlight(films: list[dict]) -> str:
         meta = " &middot; ".join(x for x in [str(f["year"]), e(f.get("director") or ""), e(f.get("character") or "")] if x)
         slides.append(
             f"""<li class="slide{' is-on' if i == 0 else ''}" data-i="{i}">
-      <img class="slide-art" src="{art}" alt="{e(f['title'])} publicity still" width="1600" height="900" {'fetchpriority="high"' if i == 0 else 'loading="lazy"'} decoding="async"{(' style="background-image:url(' + lq + ')"') if lq else ''}>
+      <img class="slide-art" src="{art}"{(' srcset="' + art.replace('.webp', '.m.webp') + ' 800w, ' + art + ' 1600w" sizes="(max-width: 760px) 100vw, 1240px"') if art.startswith('stills/') else ''} alt="{e(f['title'])} publicity still" width="1600" height="900" {'fetchpriority="high"' if i == 0 else 'loading="lazy"'} decoding="async" style="object-position:{SPOTLIGHT_FOCUS.get(slug, '70% 20%')}{(';background-image:url(' + lq + ')') if lq else ''}">
       <div class="slide-body">
         <p class="slide-kicker">In the spotlight <span class="slide-n">{i + 1:02d} / {len(SPOTLIGHT):02d}</span></p>
         <p class="slide-meta">{meta}</p>
@@ -656,6 +671,20 @@ def main() -> None:
             (DIST / folder).mkdir(exist_ok=True)
             for p in src_dir.glob("*.webp"):
                 shutil.copy(p, DIST / folder / p.name)
+    # phone-sized variants of the stills (800px wide) for srcset
+    stills_dir = DATA / "stills"
+    if stills_dir.exists():
+        from PIL import Image
+
+        for p in stills_dir.glob("*.webp"):
+            if p.name.endswith(".lqip.webp") or p.name.endswith(".m.webp"):
+                continue
+            m = stills_dir / p.name.replace(".webp", ".m.webp")
+            if not m.exists():
+                im = Image.open(p)
+                im.thumbnail((800, 450), Image.LANCZOS)
+                im.save(m, "WEBP", quality=74, method=6)
+            shutil.copy(m, DIST / "stills" / m.name)
     urls = ["/", "/stats/", "/about/"] + [f"/film/{f['slug']}/" for f in films]
     write(
         DIST / "sitemap.xml",

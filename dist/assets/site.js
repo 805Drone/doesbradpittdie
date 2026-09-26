@@ -38,8 +38,7 @@
   /* ---------- global seal toggle */
   function applyAll() {
     document.documentElement.classList.toggle('all-revealed', state.all);
-    var btn = document.querySelector('[data-seal-toggle]');
-    if (btn) btn.setAttribute('aria-pressed', String(state.all));
+    document.querySelectorAll('[data-seal-toggle]').forEach(function (btn) { btn.setAttribute('aria-pressed', String(state.all)); });
     document.querySelectorAll('.card').forEach(function (card) {
       if (card.classList.contains('is-unreleased')) return;
       var open = stageOf(card.dataset.slug) > 0;
@@ -174,14 +173,24 @@
   }
 
   /* ---------- surprise me */
-  document.addEventListener('click', function (ev) {
-    if (!ev.target.closest('[data-surprise]')) return;
+  function surprise() {
     var cards = Array.prototype.slice.call(document.querySelectorAll('.card:not(.is-unreleased)'));
+    if (!cards.length) return false;
     var fresh = cards.filter(function (c) { return !state.guessed[c.dataset.slug] && !c.classList.contains('is-revealed'); });
-    var pick = (fresh.length ? fresh : cards)[Math.floor(Math.random() * (fresh.length ? fresh : cards).length)];
-    if (!pick) return;
+    var pool = fresh.length ? fresh : cards;
+    var pick = pool[Math.floor(Math.random() * pool.length)];
     location.href = 'film/' + pick.dataset.slug + '/';
+    return true;
+  }
+  document.addEventListener('click', function (ev) {
+    if (ev.target.closest('[data-surprise]')) { surprise(); return; }
+    var l = ev.target.closest('[data-surprise-link]');
+    if (l && document.getElementById('grid')) { ev.preventDefault(); surprise(); }
   });
+  if (/[?&]surprise=1/.test(location.search) && document.getElementById('grid')) {
+    history.replaceState(null, '', location.pathname);
+    surprise();
+  }
 
   /* ---------- 3D tilt on posters (pointer devices only) */
   if (fine && !reduce) {
