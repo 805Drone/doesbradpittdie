@@ -1,4 +1,4 @@
-/* doesbradpittdie.com — "the velvet curtain" */
+/* doesbradpittdie.com â€” "the velvet curtain" */
 :root {
   --velvet: #1a0b10;
   --velvet-2: #24121b;
@@ -256,7 +256,7 @@ html.all-revealed .seal-toggle .when-revealed { display: inline; }
 .notes { margin: 0 0 1rem; color: var(--ivory-2); max-width: 62ch; }
 .facts { display: flex; flex-wrap: wrap; gap: .6rem 2rem; margin: 0 0 1.4rem; padding: 1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .fact dt { color: var(--muted); font-size: .82rem; }
-.fact dd { margin: 0; text-transform: capitalize; }
+.fact dd { margin: 0; } .fact dd::first-letter { text-transform: uppercase; }
 .conf { color: var(--muted); font-size: .9rem; }
 .scene-h { font-family: var(--display); font-weight: 400; font-style: italic; font-size: 1.5rem; margin: 0 0 .8rem; }
 .clip { display: grid; gap: .5rem; }
@@ -297,7 +297,7 @@ html.all-revealed .seal-toggle .when-revealed { display: inline; }
 .bars, .decs, .death-list { list-style: none; margin: 0; padding: 0; }
 .bars li { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "l n" "b b"; gap: .15rem .8rem; padding: .5rem 0; border-bottom: 1px solid var(--line); }
 .bars .bar { grid-area: b; height: 6px; background: var(--crimson-2); width: var(--w); border-radius: 3px; }
-.bars .bar-l { grid-area: l; text-transform: capitalize; }
+.bars .bar-l { grid-area: l; } .bars .bar-l::first-letter { text-transform: uppercase; }
 .bars .bar-n { grid-area: n; color: var(--muted); font-family: var(--display); font-size: 1.2rem; }
 .decs li { display: grid; grid-template-columns: 4.2em 1fr auto; align-items: center; gap: .8rem; padding: .5rem 0; border-bottom: 1px solid var(--line); }
 .dec-l { font-family: var(--display); font-size: 1.2rem; }
@@ -312,7 +312,7 @@ html.all-revealed .seal-toggle .when-revealed { display: inline; }
 .death-list li a:hover .dl-title { color: var(--gold); }
 .dl-year { color: var(--muted); font-family: var(--display); font-size: 1.1rem; }
 .dl-title { font-family: var(--display); font-size: 1.25rem; }
-.dl-how { color: var(--muted); font-size: .9rem; text-transform: capitalize; text-align: right; }
+.dl-how { color: var(--muted); font-size: .9rem; text-align: right; } .dl-how::first-letter { text-transform: uppercase; }
 .prose { max-width: 66ch; font-size: 1.1rem; }
 .prose h2 { font-family: var(--display); font-weight: 400; font-style: italic; font-size: 1.8rem; margin: 2.2rem 0 .6rem; }
 .mail { color: var(--gold); }
