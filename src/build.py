@@ -103,12 +103,12 @@ def head(title: str, desc: str, path: str, extra: str = "", depth: int = 0, noin
 <meta property="og:type" content="website">
 <meta property="og:image" content="{SITE}/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#1a0b10">
+<meta name="theme-color" content="#0c1015">
 <link rel="icon" href="{base}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{base}apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{base}assets/site.css?v={CSS_V}">
 {extra}
 </head>
@@ -121,11 +121,12 @@ def head(title: str, desc: str, path: str, extra: str = "", depth: int = 0, noin
 def header(depth: int = 0) -> str:
     base = "../" * depth
     return f"""<header class="top">
-  <a class="wordmark" href="{base}" aria-label="{SITE_NAME} home"><span class="wm-q">Does</span> Brad Pitt <span class="wm-q">die?</span></a>
+  <a class="wordmark" href="{base}" aria-label="{SITE_NAME} home"><span class="wm-mark" aria-hidden="true">?</span>Does Brad Pitt <span class="wm-q">die?</span></a>
   <nav class="topnav" aria-label="Primary">
-    <a href="{base}#films">Films</a>
+    <a href="{base}#films">The archive</a>
     <a href="{base}stats/">The ledger</a>
     <a href="{base}about/">About</a>
+    <span class="nav-note" aria-hidden="true">Guess first. Reveal later.</span>
     <button class="seal-toggle" type="button" data-seal-toggle aria-pressed="false">
       <span class="when-sealed">Reveal all</span><span class="when-revealed">Seal all</span>
     </button>
@@ -391,6 +392,7 @@ def build_film(f: dict) -> str:
     body = f"""<article class="film{' is-unreleased' if f.get('unreleased') else ''}{' has-bd' if film_bd else ''}" data-slug="{f['slug']}" data-verdict="{vk}" data-pool='{e(next_pool)}'>
   {film_bd}
   {hint}
+  <p class="film-top"><a class="back-link" href="{base}#films">← Back to the archive</a><span class="case-tag">Case file / {e(f['title'])}</span></p>
   <div class="film-hero">
     <div class="film-poster">{poster_html(f, base, sizes="(max-width: 700px) 60vw, 320px", eager=True)}</div>
     <div class="film-head">
@@ -569,28 +571,36 @@ def make_og() -> None:
     except ImportError:
         return
     W, H = 1200, 630
-    im = Image.new("RGB", (W, H), "#1a0b10")
+    im = Image.new("RGB", (W, H), "#0c1015")
     d = ImageDraw.Draw(im)
-    # curtain stripes
-    for x in range(0, W, 40):
-        d.rectangle((x, 0, x + 18, H), fill="#22101a")
+    still = DATA / "stills" / "fury.webp"
+    if still.exists():
+        art = Image.open(still).convert("RGB").resize((W, int(W * 9 / 16)), Image.LANCZOS)
+        im.paste(art, (0, (H - art.height) // 2))
+        scrim = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        sd = ImageDraw.Draw(scrim)
+        for x in range(W):
+            a = int(235 * max(0.0, 1 - x / (W * 0.72)))
+            sd.line((x, 0, x, H), fill=(12, 16, 21, a))
+        im = Image.alpha_composite(im.convert("RGBA"), scrim).convert("RGB")
+        d = ImageDraw.Draw(im)
     try:
-        f_big = ImageFont.truetype("C:/Windows/Fonts/georgiai.ttf", 96)
-        f_small = ImageFont.truetype("C:/Windows/Fonts/georgia.ttf", 34)
+        f_big = ImageFont.truetype("C:/Windows/Fonts/impact.ttf", 118)
+        f_small = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 30)
     except OSError:
         f_big = f_small = ImageFont.load_default()
-    d.text((80, 190), "Does Brad Pitt die", font=f_big, fill="#f4ead9")
-    d.text((80, 300), "in this one?", font=f_big, fill="#d9b26a")
-    d.text((84, 450), "Every film and show. Sealed until you say so.", font=f_small, fill="#b9a6ad")
-    d.text((84, 560), "doesbradpittdie.com", font=f_small, fill="#8f1d2c")
+    d.text((70, 150), "DOES BRAD PITT", font=f_big, fill="#f4f2ec")
+    d.text((70, 275), "DIE?", font=f_big, fill="#f26b3a")
+    d.text((74, 440), "EVERY FILM AND SHOW. SEALED UNTIL YOU ASK.", font=f_small, fill="#c9ccd2")
+    d.text((74, 540), "DOESBRADPITTDIE.COM", font=f_small, fill="#f26b3a")
     im.save(DIST / "og.png", optimize=True)
-    icon = Image.new("RGB", (180, 180), "#1a0b10")
+    icon = Image.new("RGB", (180, 180), "#f26b3a")
     di = ImageDraw.Draw(icon)
     try:
-        f_i = ImageFont.truetype("C:/Windows/Fonts/georgiai.ttf", 120)
+        f_i = ImageFont.truetype("C:/Windows/Fonts/impact.ttf", 130)
     except OSError:
         f_i = ImageFont.load_default()
-    di.text((48, 12), "?", font=f_i, fill="#d9b26a")
+    di.text((90, 90), "?", font=f_i, fill="#0c1015", anchor="mm")
     icon.save(DIST / "apple-touch-icon.png")
 
 
