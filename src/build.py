@@ -22,6 +22,16 @@ SITE = "https://doesbradpittdie.com"
 SITE_NAME = "Does Brad Pitt Die?"
 BUILD_DATE = date.today().isoformat()
 
+
+def _hash(name: str) -> str:
+    import hashlib
+
+    return hashlib.md5((SRC / "static" / name).read_bytes()).hexdigest()[:8]
+
+
+CSS_V = _hash("site.css")
+JS_V = _hash("site.js")
+
 e = html.escape
 
 
@@ -79,7 +89,7 @@ def head(title: str, desc: str, path: str, extra: str = "", depth: int = 0) -> s
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{base}assets/site.css?v={BUILD_DATE}">
+<link rel="stylesheet" href="{base}assets/site.css?v={CSS_V}">
 {extra}
 </head>
 <body data-base="{base}">
@@ -113,7 +123,7 @@ def footer(depth: int = 0) -> str:
   <p class="foot-links"><a href="{base}">Home</a> <a href="{base}stats/">The ledger</a> <a href="{base}about/">About</a> <a href="{base}about/#corrections">Send a correction</a></p>
   <p class="foot-line">Spoilers stay sealed until you ask. Updated {BUILD_DATE}.</p>
 </footer>
-<script src="{base}assets/site.js?v={BUILD_DATE}" defer></script>
+<script src="{base}assets/site.js?v={JS_V}" defer></script>
 </body>
 </html>
 """
