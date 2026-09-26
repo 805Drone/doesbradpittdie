@@ -39,6 +39,7 @@ body {
     radial-gradient(900px 500px at 100% 20%, rgba(217, 178, 106, .07), transparent 60%);
   background-attachment: fixed;
 }
+.top, main, .foot { max-width: 1560px; margin-inline: auto; }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration-color: rgba(217, 178, 106, .55); text-underline-offset: .18em; }
 a:hover { text-decoration-color: var(--gold); }

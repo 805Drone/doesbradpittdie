@@ -60,9 +60,32 @@ def original_image(title: str) -> str | None:
     return None
 
 
+def title_card(im: Image.Image) -> Image.Image:
+    """Landscape logos/title cards: set them on a blurred, darkened velvet 2:3 card."""
+    from PIL import ImageFilter, ImageEnhance
+
+    W, H = 600, 900
+    bg = im.copy()
+    scale = max(W / bg.width, H / bg.height) * 1.15
+    bg = bg.resize((int(bg.width * scale), int(bg.height * scale)), Image.LANCZOS)
+    bg = bg.crop(((bg.width - W) // 2, (bg.height - H) // 2, (bg.width - W) // 2 + W, (bg.height - H) // 2 + H))
+    bg = bg.filter(ImageFilter.GaussianBlur(28))
+    bg = ImageEnhance.Brightness(bg).enhance(0.38)
+    velvet = Image.new("RGB", (W, H), (26, 11, 16))
+    bg = Image.blend(velvet, bg, 0.75)
+    fg = im.copy()
+    fg.thumbnail((int(W * 0.84), int(H * 0.6)), Image.LANCZOS)
+    bg.paste(fg, ((W - fg.width) // 2, (H - fg.height) // 2))
+    return bg
+
+
 def normalise(raw: bytes, out: Path) -> tuple[int, int]:
     im = Image.open(io.BytesIO(raw)).convert("RGB")
     w, h = im.size
+    if w / h > 0.9:
+        card = title_card(im)
+        card.save(out, "WEBP", quality=82, method=6)
+        return card.size
     # crop to 2:3 if wildly off, otherwise keep
     target = 2 / 3
     if abs(w / h - target) > 0.08:
