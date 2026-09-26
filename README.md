@@ -27,6 +27,13 @@ by `python src/merge_trailers.py`). `python src/backdrops.py` turns each into a 
 frame in `data/backdrops/`, used only for the "Give me a hint" iris on film pages. Posters
 are the consistent imagery everywhere else.
 
+## Stills (spotlight and hints)
+
+`python src/stills.py` scrapes the top-voted backdrop for each title with a `tmdb_id` from
+themoviedb.org's public image pages (no API key) into `data/stills/` at 1600x900. The home
+spotlight (`SPOTLIGHT` in build.py) and the film-page hint prefer a still and fall back to the
+trailer frame. Featured ordering of the grid is the `FEATURED` list in build.py.
+
 ## The back room (unlisted blog)
 
 Posts are `content/backroom/*.md` with `title`, `date`, `summary` front matter. They render to
