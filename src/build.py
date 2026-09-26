@@ -53,6 +53,18 @@ def verdict_key(f: dict) -> str:
 
 VERDICT_WORD = {"dies": "Dies", "survives": "Survives", "ambiguous": "It's complicated"}
 VERDICT_ANSWER = {"dies": "Yes", "survives": "No", "ambiguous": "Sort of"}
+TEASE = {
+    "dies": "He does not make it to the credits.",
+    "survives": "He is alive when the credits roll.",
+    "ambiguous": "It's complicated.",
+}
+WHEN_TEASE = {
+    "early": "It happens early.",
+    "midpoint": "It happens around the midpoint.",
+    "climax": "It happens at the climax.",
+    "ending": "It happens at the very end.",
+    "off-screen": "It happens off screen.",
+}
 
 
 def split_verdict(f: dict) -> tuple[str, str]:
@@ -157,8 +169,12 @@ def card(f: dict) -> str:
 def card_button(f: dict, vk: str) -> str:
     if f.get("unreleased"):
         return f'<p class="reveal-btn is-unreleased">Not released yet. {e(f["unreleased"])}</p>'
-    return (f'<button class="reveal-btn" type="button" data-reveal="{f["slug"]}" aria-label="Reveal whether Brad Pitt dies in {e(f["title"])}">'
-            f'<span class="when-sealed">Reveal</span><span class="when-revealed">{e(f["verdict_short"] or VERDICT_WORD[vk])}</span></button>')
+    vword, _ = split_verdict(f)
+    return (f'<div class="card-actions">'
+            f'<button class="reveal-btn" type="button" data-reveal="{f["slug"]}" aria-label="Reveal whether Brad Pitt dies in {e(f["title"])}">'
+            f'<span class="when-sealed">Reveal</span><span class="when-revealed">{e(vword)} {TEASE[vk]}</span></button>'
+            f'<a class="spoil-link" href="film/{f["slug"]}/?spoil=1" aria-label="How it happens in {e(f["title"])}">How?</a>'
+            f'</div>')
 
 
 # ---------------------------------------------------------------- pages
@@ -285,7 +301,7 @@ def build_film(f: dict) -> str:
           <button type="button" class="guess-btn" data-guess="dies">He dies</button>
         </div>
         <button type="button" class="reveal-big" data-reveal="{f['slug']}">Just reveal it</button>
-        <p class="seal-fine">Revealing shows the answer, the scene, and a clip if we have one.</p>
+        <p class="seal-fine">Revealing shows only the answer. Everything else stays behind its own curtain.</p>
       </div>"""
     if f.get("unreleased"):
         seal_block = f"""<div class="seal seal-unreleased" data-seal>
@@ -305,15 +321,36 @@ def build_film(f: dict) -> str:
 
       <div class="verdict" data-nosnippet hidden>
         <div class="curtain curtain-big" aria-hidden="true"><span class="curtain-l"></span><span class="curtain-r"></span></div>
-        <p class="guess-result" data-guess-result aria-live="polite"></p>
-        <p class="verdict-answer"><span class="verdict-word">{e(vword)}</span> {e(vrest)}</p>
-        <p class="verdict-how">{e(f['how'])}</p>
-        {notes}
-        <dl class="facts">{facts_html}</dl>
-        {conf_html}
-        <h2 class="scene-h">The scene</h2>
-        {clip_html(f)}
-        <p class="streak" data-streak hidden></p>
+        <div class="spot" aria-hidden="true"></div>
+
+        <section class="stage stage-1" data-stage="1">
+          <p class="guess-result" data-guess-result aria-live="polite"></p>
+          <p class="verdict-answer"><span class="verdict-word" data-split>{e(vword)}</span></p>
+          <p class="verdict-tease" data-split>{TEASE[vk]}{(' ' + WHEN_TEASE[f['when']]) if vk == 'dies' and f.get('when') in WHEN_TEASE else ''}</p>
+          <p class="streak" data-streak hidden></p>
+          <div class="gate" data-gate="2">
+            <button type="button" class="spoil-btn" data-spoil="2"><span class="spoil-shine" aria-hidden="true"></span>Spoil the moment</button>
+            <p class="gate-fine">How it happens, in words. No pictures yet.</p>
+          </div>
+        </section>
+
+        <section class="stage stage-2" data-stage="2" hidden>
+          <h2 class="moment-h" data-split>{e(vrest or VERDICT_WORD[vk])}</h2>
+          <p class="verdict-how redact">{e(f['how'])}</p>
+          {notes.replace("class='notes'", "class='notes redact'")}
+          <dl class="facts">{facts_html}</dl>
+          {conf_html}
+          <div class="gate" data-gate="3">
+            <button type="button" class="spoil-btn spoil-btn-2" data-spoil="3"><span class="spoil-shine" aria-hidden="true"></span>Show me the scene</button>
+            <p class="gate-fine">{'The clip, from YouTube. This is the whole thing.' if f.get('youtube_id') else 'Where to find the scene.'}</p>
+          </div>
+        </section>
+
+        <section class="stage stage-3" data-stage="3" hidden>
+          <h2 class="scene-h">The scene</h2>
+          {clip_html(f)}
+        </section>
+
         <button type="button" class="reseal" data-reseal>Seal it again</button>
       </div>
     </div>

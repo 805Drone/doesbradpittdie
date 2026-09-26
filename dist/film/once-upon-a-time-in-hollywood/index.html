@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/site.css?v=7cfd612b">
+<link rel="stylesheet" href="../../assets/site.css?v=c02734f0">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Movie", "name": "Once Upon a Time in Hollywood", "datePublished": "2019", "actor": {"@type": "Person", "name": "Brad Pitt"}, "url": "https://doesbradpittdie.com/film/once-upon-a-time-in-hollywood/", "director": {"@type": "Person", "name": "Quentin Tarantino"}, "image": "https://doesbradpittdie.com/posters/once-upon-a-time-in-hollywood.webp"}</script>
 </head>
 <body data-base="../../">
@@ -52,26 +52,47 @@
           <button type="button" class="guess-btn" data-guess="dies">He dies</button>
         </div>
         <button type="button" class="reveal-big" data-reveal="once-upon-a-time-in-hollywood">Just reveal it</button>
-        <p class="seal-fine">Revealing shows the answer, the scene, and a clip if we have one.</p>
+        <p class="seal-fine">Revealing shows only the answer. Everything else stays behind its own curtain.</p>
       </div>
 
       <div class="verdict" data-nosnippet hidden>
         <div class="curtain curtain-big" aria-hidden="true"><span class="curtain-l"></span><span class="curtain-r"></span></div>
-        <p class="guess-result" data-guess-result aria-live="polite"></p>
-        <p class="verdict-answer"><span class="verdict-word">No.</span> Stabbed in the hip, but he beats the Manson Family to death and rides off in an ambulance.</p>
-        <p class="verdict-how">On August 8, 1969, Cliff, tripping on an acid-dipped cigarette, is walking Brandy the pit bull when three Manson Family members break into Rick Dalton&#x27;s house instead of Sharon Tate&#x27;s. Cliff sics Brandy on Tex, stomps him to death, and after Katie stabs him in the hip he smashes her face in with a can of dog food and anything else within reach; Rick torches the third intruder with a flamethrower. Cliff is loaded into an ambulance alive, joking with Rick, while Rick gets invited up to Sharon Tate&#x27;s house for a drink.</p>
-        <p class='notes'>Won Pitt the Academy Award for Best Supporting Actor.</p>
-        <dl class="facts"><div class='fact'><dt>Director</dt><dd>Quentin Tarantino</dd></div><div class='fact'><dt>Runtime</dt><dd>161 min</dd></div></dl>
-        
-        <h2 class="scene-h">The scene</h2>
-        <div class="clip" data-clip="wLuLOoteD7M">
+        <div class="spot" aria-hidden="true"></div>
+
+        <section class="stage stage-1" data-stage="1">
+          <p class="guess-result" data-guess-result aria-live="polite"></p>
+          <p class="verdict-answer"><span class="verdict-word" data-split>No.</span></p>
+          <p class="verdict-tease" data-split>He is alive when the credits roll.</p>
+          <p class="streak" data-streak hidden></p>
+          <div class="gate" data-gate="2">
+            <button type="button" class="spoil-btn" data-spoil="2"><span class="spoil-shine" aria-hidden="true"></span>Spoil the moment</button>
+            <p class="gate-fine">How it happens, in words. No pictures yet.</p>
+          </div>
+        </section>
+
+        <section class="stage stage-2" data-stage="2" hidden>
+          <h2 class="moment-h" data-split>Stabbed in the hip, but he beats the Manson Family to death and rides off in an ambulance.</h2>
+          <p class="verdict-how redact">On August 8, 1969, Cliff, tripping on an acid-dipped cigarette, is walking Brandy the pit bull when three Manson Family members break into Rick Dalton&#x27;s house instead of Sharon Tate&#x27;s. Cliff sics Brandy on Tex, stomps him to death, and after Katie stabs him in the hip he smashes her face in with a can of dog food and anything else within reach; Rick torches the third intruder with a flamethrower. Cliff is loaded into an ambulance alive, joking with Rick, while Rick gets invited up to Sharon Tate&#x27;s house for a drink.</p>
+          <p class='notes redact'>Won Pitt the Academy Award for Best Supporting Actor.</p>
+          <dl class="facts"><div class='fact'><dt>Director</dt><dd>Quentin Tarantino</dd></div><div class='fact'><dt>Runtime</dt><dd>161 min</dd></div></dl>
+          
+          <div class="gate" data-gate="3">
+            <button type="button" class="spoil-btn spoil-btn-2" data-spoil="3"><span class="spoil-shine" aria-hidden="true"></span>Show me the scene</button>
+            <p class="gate-fine">The clip, from YouTube. This is the whole thing.</p>
+          </div>
+        </section>
+
+        <section class="stage stage-3" data-stage="3" hidden>
+          <h2 class="scene-h">The scene</h2>
+          <div class="clip" data-clip="wLuLOoteD7M">
   <button class="clip-btn" type="button" aria-label="Play the scene from Once Upon a Time in Hollywood">
     <img src="https://i.ytimg.com/vi/wLuLOoteD7M/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
     <span class="clip-play"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg> Play the scene</span>
   </button>
   <p class="clip-note">Plays from YouTube. <a href="https://www.youtube.com/watch?v=wLuLOoteD7M" rel="noopener" target="_blank">Open on YouTube</a></p>
 </div>
-        <p class="streak" data-streak hidden></p>
+        </section>
+
         <button type="button" class="reseal" data-reseal>Seal it again</button>
       </div>
     </div>
@@ -86,6 +107,6 @@
   <p class="foot-links"><a href="../../">Home</a> <a href="../../stats/">The ledger</a> <a href="../../about/">About</a> <a href="../../about/#corrections">Send a correction</a></p>
   <p class="foot-line">Spoilers stay sealed until you ask. Updated 2026-09-25.</p>
 </footer>
-<script src="../../assets/site.js?v=373413a6" defer></script>
+<script src="../../assets/site.js?v=f3f2cd1e" defer></script>
 </body>
 </html>
