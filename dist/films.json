@@ -23,7 +23,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/another-world.webp",
-  "lqip": "backdrops/another-world.lqip.webp"
+  "lqip": "backdrops/another-world.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Dallas",
@@ -49,7 +51,9 @@
   "youtube_id": null,
   "poster": "posters/dallas.webp",
   "backdrop": "backdrops/dallas.webp",
-  "lqip": "backdrops/dallas.lqip.webp"
+  "lqip": "backdrops/dallas.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Growing Pains",
@@ -75,7 +79,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/growing-pains.webp",
-  "lqip": "backdrops/growing-pains.lqip.webp"
+  "lqip": "backdrops/growing-pains.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "21 Jump Street",
@@ -101,7 +107,9 @@
   "youtube_id": null,
   "poster": "posters/21-jump-street.webp",
   "backdrop": "backdrops/21-jump-street.webp",
-  "lqip": "backdrops/21-jump-street.lqip.webp"
+  "lqip": "backdrops/21-jump-street.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "A Stoning in Fulham County",
@@ -127,7 +135,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/a-stoning-in-fulham-county.webp",
-  "lqip": "backdrops/a-stoning-in-fulham-county.lqip.webp"
+  "lqip": "backdrops/a-stoning-in-fulham-county.lqip.webp",
+  "still": "stills/a-stoning-in-fulham-county.webp",
+  "still_lqip": "stills/a-stoning-in-fulham-county.lqip.webp"
  },
  {
   "title": "The Dark Side of the Sun",
@@ -153,7 +163,9 @@
   "youtube_id": null,
   "poster": "posters/the-dark-side-of-the-sun.webp",
   "backdrop": "backdrops/the-dark-side-of-the-sun.webp",
-  "lqip": "backdrops/the-dark-side-of-the-sun.lqip.webp"
+  "lqip": "backdrops/the-dark-side-of-the-sun.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Trial and Error",
@@ -179,7 +191,9 @@
   "youtube_id": null,
   "poster": "posters/trial-and-error.webp",
   "backdrop": "backdrops/trial-and-error.webp",
-  "lqip": "backdrops/trial-and-error.lqip.webp"
+  "lqip": "backdrops/trial-and-error.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Cutting Class",
@@ -205,7 +219,9 @@
   "youtube_id": null,
   "poster": "posters/cutting-class.webp",
   "backdrop": "backdrops/cutting-class.webp",
-  "lqip": "backdrops/cutting-class.lqip.webp"
+  "lqip": "backdrops/cutting-class.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Freddy's Nightmares",
@@ -231,7 +247,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/freddys-nightmares.webp",
-  "lqip": "backdrops/freddys-nightmares.lqip.webp"
+  "lqip": "backdrops/freddys-nightmares.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Happy Together",
@@ -257,7 +275,9 @@
   "youtube_id": null,
   "poster": "posters/happy-together.webp",
   "backdrop": "backdrops/happy-together.webp",
-  "lqip": "backdrops/happy-together.lqip.webp"
+  "lqip": "backdrops/happy-together.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Head of the Class",
@@ -283,7 +303,9 @@
   "youtube_id": null,
   "poster": "posters/head-of-the-class.webp",
   "backdrop": "backdrops/head-of-the-class.webp",
-  "lqip": "backdrops/head-of-the-class.lqip.webp"
+  "lqip": "backdrops/head-of-the-class.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "thirtysomething",
@@ -309,7 +331,9 @@
   "youtube_id": null,
   "poster": "posters/thirtysomething.webp",
   "backdrop": "backdrops/thirtysomething.webp",
-  "lqip": "backdrops/thirtysomething.lqip.webp"
+  "lqip": "backdrops/thirtysomething.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Glory Days",
@@ -335,7 +359,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/glory-days.webp",
-  "lqip": "backdrops/glory-days.lqip.webp"
+  "lqip": "backdrops/glory-days.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "The Image",
@@ -361,7 +387,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": null,
-  "lqip": null
+  "lqip": null,
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Too Young to Die?",
@@ -387,7 +415,9 @@
   "youtube_id": null,
   "poster": "posters/too-young-to-die.webp",
   "backdrop": "backdrops/too-young-to-die.webp",
-  "lqip": "backdrops/too-young-to-die.lqip.webp"
+  "lqip": "backdrops/too-young-to-die.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Across the Tracks",
@@ -413,7 +443,9 @@
   "youtube_id": null,
   "poster": "posters/across-the-tracks.webp",
   "backdrop": "backdrops/across-the-tracks.webp",
-  "lqip": "backdrops/across-the-tracks.lqip.webp"
+  "lqip": "backdrops/across-the-tracks.lqip.webp",
+  "still": "stills/across-the-tracks.webp",
+  "still_lqip": "stills/across-the-tracks.lqip.webp"
  },
  {
   "title": "Johnny Suede",
@@ -439,7 +471,9 @@
   "youtube_id": null,
   "poster": "posters/johnny-suede.webp",
   "backdrop": "backdrops/johnny-suede.webp",
-  "lqip": "backdrops/johnny-suede.lqip.webp"
+  "lqip": "backdrops/johnny-suede.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Thelma & Louise",
@@ -465,7 +499,9 @@
   "youtube_id": null,
   "poster": "posters/thelma-and-louise.webp",
   "backdrop": "backdrops/thelma-and-louise.webp",
-  "lqip": "backdrops/thelma-and-louise.lqip.webp"
+  "lqip": "backdrops/thelma-and-louise.lqip.webp",
+  "still": "stills/thelma-and-louise.webp",
+  "still_lqip": "stills/thelma-and-louise.lqip.webp"
  },
  {
   "title": "A River Runs Through It",
@@ -491,7 +527,9 @@
   "youtube_id": "nMAk0E465lo",
   "poster": "posters/a-river-runs-through-it.webp",
   "backdrop": "backdrops/a-river-runs-through-it.webp",
-  "lqip": "backdrops/a-river-runs-through-it.lqip.webp"
+  "lqip": "backdrops/a-river-runs-through-it.lqip.webp",
+  "still": "stills/a-river-runs-through-it.webp",
+  "still_lqip": "stills/a-river-runs-through-it.lqip.webp"
  },
  {
   "title": "Contact",
@@ -517,7 +555,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/contact.webp",
-  "lqip": "backdrops/contact.lqip.webp"
+  "lqip": "backdrops/contact.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Cool World",
@@ -543,7 +583,9 @@
   "youtube_id": "jmgf-fWlaiE",
   "poster": "posters/cool-world.webp",
   "backdrop": "backdrops/cool-world.webp",
-  "lqip": "backdrops/cool-world.lqip.webp"
+  "lqip": "backdrops/cool-world.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Tales from the Crypt",
@@ -569,7 +611,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/tales-from-the-crypt.webp",
-  "lqip": "backdrops/tales-from-the-crypt.lqip.webp"
+  "lqip": "backdrops/tales-from-the-crypt.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Kalifornia",
@@ -595,7 +639,9 @@
   "youtube_id": "1c5xWXSWSgo",
   "poster": "posters/kalifornia.webp",
   "backdrop": "backdrops/kalifornia.webp",
-  "lqip": "backdrops/kalifornia.lqip.webp"
+  "lqip": "backdrops/kalifornia.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "True Romance",
@@ -621,7 +667,9 @@
   "youtube_id": null,
   "poster": "posters/true-romance.webp",
   "backdrop": "backdrops/true-romance.webp",
-  "lqip": "backdrops/true-romance.lqip.webp"
+  "lqip": "backdrops/true-romance.lqip.webp",
+  "still": "stills/true-romance.webp",
+  "still_lqip": "stills/true-romance.lqip.webp"
  },
  {
   "title": "Interview with the Vampire",
@@ -647,7 +695,9 @@
   "youtube_id": null,
   "poster": "posters/interview-with-the-vampire.webp",
   "backdrop": "backdrops/interview-with-the-vampire.webp",
-  "lqip": "backdrops/interview-with-the-vampire.lqip.webp"
+  "lqip": "backdrops/interview-with-the-vampire.lqip.webp",
+  "still": "stills/interview-with-the-vampire.webp",
+  "still_lqip": "stills/interview-with-the-vampire.lqip.webp"
  },
  {
   "title": "Legends of the Fall",
@@ -673,7 +723,9 @@
   "youtube_id": "1FJeHA6KshI",
   "poster": "posters/legends-of-the-fall.webp",
   "backdrop": "backdrops/legends-of-the-fall.webp",
-  "lqip": "backdrops/legends-of-the-fall.lqip.webp"
+  "lqip": "backdrops/legends-of-the-fall.lqip.webp",
+  "still": "stills/legends-of-the-fall.webp",
+  "still_lqip": "stills/legends-of-the-fall.lqip.webp"
  },
  {
   "title": "The Favor",
@@ -699,7 +751,9 @@
   "youtube_id": null,
   "poster": "posters/the-favor.webp",
   "backdrop": "backdrops/the-favor.webp",
-  "lqip": "backdrops/the-favor.lqip.webp"
+  "lqip": "backdrops/the-favor.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "12 Monkeys",
@@ -725,7 +779,9 @@
   "youtube_id": null,
   "poster": "posters/12-monkeys.webp",
   "backdrop": "backdrops/12-monkeys.webp",
-  "lqip": "backdrops/12-monkeys.lqip.webp"
+  "lqip": "backdrops/12-monkeys.lqip.webp",
+  "still": "stills/12-monkeys.webp",
+  "still_lqip": "stills/12-monkeys.lqip.webp"
  },
  {
   "title": "Seven",
@@ -751,7 +807,9 @@
   "youtube_id": "WIi1f5cUADQ",
   "poster": "posters/seven.webp",
   "backdrop": "backdrops/seven.webp",
-  "lqip": "backdrops/seven.lqip.webp"
+  "lqip": "backdrops/seven.lqip.webp",
+  "still": "stills/seven.webp",
+  "still_lqip": "stills/seven.lqip.webp"
  },
  {
   "title": "Sleepers",
@@ -777,7 +835,9 @@
   "youtube_id": null,
   "poster": "posters/sleepers.webp",
   "backdrop": "backdrops/sleepers.webp",
-  "lqip": "backdrops/sleepers.lqip.webp"
+  "lqip": "backdrops/sleepers.lqip.webp",
+  "still": "stills/sleepers.webp",
+  "still_lqip": "stills/sleepers.lqip.webp"
  },
  {
   "title": "Seven Years in Tibet",
@@ -803,7 +863,9 @@
   "youtube_id": null,
   "poster": "posters/seven-years-in-tibet.webp",
   "backdrop": "backdrops/seven-years-in-tibet.webp",
-  "lqip": "backdrops/seven-years-in-tibet.lqip.webp"
+  "lqip": "backdrops/seven-years-in-tibet.lqip.webp",
+  "still": "stills/seven-years-in-tibet.webp",
+  "still_lqip": "stills/seven-years-in-tibet.lqip.webp"
  },
  {
   "title": "The Devil's Own",
@@ -829,7 +891,9 @@
   "youtube_id": "9RCx1Lt56TM",
   "poster": "posters/the-devils-own.webp",
   "backdrop": "backdrops/the-devils-own.webp",
-  "lqip": "backdrops/the-devils-own.lqip.webp"
+  "lqip": "backdrops/the-devils-own.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Meet Joe Black",
@@ -855,7 +919,9 @@
   "youtube_id": "5oTYvPfjsn0",
   "poster": "posters/meet-joe-black.webp",
   "backdrop": "backdrops/meet-joe-black.webp",
-  "lqip": "backdrops/meet-joe-black.lqip.webp"
+  "lqip": "backdrops/meet-joe-black.lqip.webp",
+  "still": "stills/meet-joe-black.webp",
+  "still_lqip": "stills/meet-joe-black.lqip.webp"
  },
  {
   "title": "Saturday Night Live",
@@ -881,7 +947,9 @@
   "youtube_id": null,
   "poster": "posters/saturday-night-live-1998.webp",
   "backdrop": "backdrops/saturday-night-live-1998.webp",
-  "lqip": "backdrops/saturday-night-live-1998.lqip.webp"
+  "lqip": "backdrops/saturday-night-live-1998.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Being John Malkovich",
@@ -907,7 +975,9 @@
   "youtube_id": null,
   "poster": "posters/being-john-malkovich.webp",
   "backdrop": "backdrops/being-john-malkovich.webp",
-  "lqip": "backdrops/being-john-malkovich.lqip.webp"
+  "lqip": "backdrops/being-john-malkovich.lqip.webp",
+  "still": "stills/being-john-malkovich.webp",
+  "still_lqip": "stills/being-john-malkovich.lqip.webp"
  },
  {
   "title": "Fight Club",
@@ -933,7 +1003,9 @@
   "youtube_id": "CXmHczK64h0",
   "poster": "posters/fight-club.webp",
   "backdrop": "backdrops/fight-club.webp",
-  "lqip": "backdrops/fight-club.lqip.webp"
+  "lqip": "backdrops/fight-club.lqip.webp",
+  "still": "stills/fight-club.webp",
+  "still_lqip": "stills/fight-club.lqip.webp"
  },
  {
   "title": "Snatch",
@@ -959,7 +1031,9 @@
   "youtube_id": null,
   "poster": "posters/snatch.webp",
   "backdrop": "backdrops/snatch.webp",
-  "lqip": "backdrops/snatch.lqip.webp"
+  "lqip": "backdrops/snatch.lqip.webp",
+  "still": "stills/snatch.webp",
+  "still_lqip": "stills/snatch.lqip.webp"
  },
  {
   "title": "Friends",
@@ -985,7 +1059,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/friends.webp",
-  "lqip": "backdrops/friends.lqip.webp"
+  "lqip": "backdrops/friends.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Ocean's Eleven",
@@ -1011,7 +1087,9 @@
   "youtube_id": null,
   "poster": "posters/oceans-eleven.webp",
   "backdrop": "backdrops/oceans-eleven.webp",
-  "lqip": "backdrops/oceans-eleven.lqip.webp"
+  "lqip": "backdrops/oceans-eleven.lqip.webp",
+  "still": "stills/oceans-eleven.webp",
+  "still_lqip": "stills/oceans-eleven.lqip.webp"
  },
  {
   "title": "Spy Game",
@@ -1037,7 +1115,9 @@
   "youtube_id": null,
   "poster": "posters/spy-game.webp",
   "backdrop": "backdrops/spy-game.webp",
-  "lqip": "backdrops/spy-game.lqip.webp"
+  "lqip": "backdrops/spy-game.lqip.webp",
+  "still": "stills/spy-game.webp",
+  "still_lqip": "stills/spy-game.lqip.webp"
  },
  {
   "title": "The Mexican",
@@ -1063,7 +1143,9 @@
   "youtube_id": null,
   "poster": "posters/the-mexican.webp",
   "backdrop": "backdrops/the-mexican.webp",
-  "lqip": "backdrops/the-mexican.lqip.webp"
+  "lqip": "backdrops/the-mexican.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Confessions of a Dangerous Mind",
@@ -1089,7 +1171,9 @@
   "youtube_id": null,
   "poster": "posters/confessions-of-a-dangerous-mind.webp",
   "backdrop": "backdrops/confessions-of-a-dangerous-mind.webp",
-  "lqip": "backdrops/confessions-of-a-dangerous-mind.lqip.webp"
+  "lqip": "backdrops/confessions-of-a-dangerous-mind.lqip.webp",
+  "still": "stills/confessions-of-a-dangerous-mind.webp",
+  "still_lqip": "stills/confessions-of-a-dangerous-mind.lqip.webp"
  },
  {
   "title": "Full Frontal",
@@ -1115,7 +1199,9 @@
   "youtube_id": null,
   "poster": "posters/full-frontal.webp",
   "backdrop": "backdrops/full-frontal.webp",
-  "lqip": "backdrops/full-frontal.lqip.webp"
+  "lqip": "backdrops/full-frontal.lqip.webp",
+  "still": "stills/full-frontal.webp",
+  "still_lqip": "stills/full-frontal.lqip.webp"
  },
  {
   "title": "Jackass",
@@ -1141,7 +1227,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/jackass.webp",
-  "lqip": "backdrops/jackass.lqip.webp"
+  "lqip": "backdrops/jackass.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "King of the Hill",
@@ -1167,7 +1255,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/king-of-the-hill.webp",
-  "lqip": "backdrops/king-of-the-hill.lqip.webp"
+  "lqip": "backdrops/king-of-the-hill.lqip.webp",
+  "still": null,
+  "still_lqip": null
  },
  {
   "title": "Sinbad: Legend of the Seven Seas",
@@ -1193,7 +1283,9 @@
   "youtube_id": null,
   "poster": "posters/sinbad-legend-of-the-seven-seas.webp",
   "backdrop": "backdrops/sinbad-legend-of-the-seven-seas.webp",
-  "lqip": "backdrops/sinbad-legend-of-the-seven-seas.lqip.webp"
+  "lqip": "backdrops/sinbad-legend-of-the-seven-seas.lqip.webp",
+  "still": "stills/sinbad-legend-of-the-seven-seas.webp",
+  "still_lqip": "stills/sinbad-legend-of-the-seven-seas.lqip.webp"
  },
  {
   "title": "Ocean's Twelve",
@@ -1219,7 +1311,9 @@
   "youtube_id": null,
   "poster": "posters/oceans-twelve.webp",
   "backdrop": "backdrops/oceans-twelve.webp",
-  "lqip": "backdrops/oceans-twelve.lqip.webp"
+  "lqip": "backdrops/oceans-twelve.lqip.webp",
+  "still": "stills/oceans-twelve.webp",
+  "still_lqip": "stills/oceans-twelve.lqip.webp"
  },
  {
   "title": "Troy",
@@ -1245,7 +1339,9 @@
   "youtube_id": "1QZgJhQhFvg",
   "poster": "posters/troy.webp",
   "backdrop": "backdrops/troy.webp",
-  "lqip": "backdrops/troy.lqip.webp"
+  "lqip": "backdrops/troy.lqip.webp",
+  "still": "stills/troy.webp",
+  "still_lqip": "stills/troy.lqip.webp"
  },
  {
   "title": "Mr. & Mrs. Smith",
@@ -1271,7 +1367,9 @@
   "youtube_id": null,
   "poster": "posters/mr-and-mrs-smith.webp",
   "backdrop": "backdrops/mr-and-mrs-smith.webp",
-  "lqip": "backdrops/mr-and-mrs-smith.lqip.webp"
+  "lqip": "backdrops/mr-and-mrs-smith.lqip.webp",
+  "still": "stills/mr-and-mrs-smith.webp",
+  "still_lqip": "stills/mr-and-mrs-smith.lqip.webp"
  },
  {
   "title": "Babel",
@@ -1297,7 +1395,9 @@
   "youtube_id": null,
   "poster": "posters/babel.webp",
   "backdrop": "backdrops/babel.webp",
-  "lqip": "backdrops/babel.lqip.webp"
+  "lqip": "backdrops/babel.lqip.webp",
+  "still": "stills/babel.webp",
+  "still_lqip": "stills/babel.lqip.webp"
  },
  {
   "title": "Ocean's Thirteen",
@@ -1323,7 +1423,9 @@
   "youtube_id": null,
   "poster": "posters/oceans-thirteen.webp",
   "backdrop": "backdrops/oceans-thirteen.webp",
-  "lqip": "backdrops/oceans-thirteen.lqip.webp"
+  "lqip": "backdrops/oceans-thirteen.lqip.webp",
+  "still": "stills/oceans-thirteen.webp",
+  "still_lqip": "stills/oceans-thirteen.lqip.webp"
  },
  {
   "title": "The Assassination of Jesse James by the Coward Robert Ford",
@@ -1349,7 +1451,9 @@
   "youtube_id": "-drqy8kzatk",
   "poster": "posters/the-assassination-of-jesse-james-by-the-coward-robert-ford.webp",
   "backdrop": "backdrops/the-assassination-of-jesse-james-by-the-coward-robert-ford.webp",
-  "lqip": "backdrops/the-assassination-of-jesse-james-by-the-coward-robert-ford.lqip.webp"
+  "lqip": "backdrops/the-assassination-of-jesse-james-by-the-coward-robert-ford.lqip.webp",
+  "still": "stills/the-assassination-of-jesse-james-by-the-coward-robert-ford.webp",
+  "still_lqip": "stills/the-assassination-of-jesse-james-by-the-coward-robert-ford.lqip.webp"
  },
  {
   "title": "Burn After Reading",
@@ -1375,7 +1479,9 @@
   "youtube_id": "c38HJR-9vhU",
   "poster": "posters/burn-after-reading.webp",
   "backdrop": "backdrops/burn-after-reading.webp",
-  "lqip": "backdrops/burn-after-reading.lqip.webp"
+  "lqip": "backdrops/burn-after-reading.lqip.webp",
+  "still": "stills/burn-after-reading.webp",
+  "still_lqip": "stills/burn-after-reading.lqip.webp"
  },
  {
   "title": "The Curious Case of Benjamin Button",
@@ -1401,7 +1507,9 @@
   "youtube_id": "uU-d-Wqhu0I",
   "poster": "posters/the-curious-case-of-benjamin-button.webp",
   "backdrop": "backdrops/the-curious-case-of-benjamin-button.webp",
-  "lqip": "backdrops/the-curious-case-of-benjamin-button.lqip.webp"
+  "lqip": "backdrops/the-curious-case-of-benjamin-button.lqip.webp",
+  "still": "stills/the-curious-case-of-benjamin-button.webp",
+  "still_lqip": "stills/the-curious-case-of-benjamin-button.lqip.webp"
  },
  {
   "title": "Inglourious Basterds",
@@ -1427,7 +1535,9 @@
   "youtube_id": "fFGuXGFVSe8",
   "poster": "posters/inglourious-basterds.webp",
   "backdrop": "backdrops/inglourious-basterds.webp",
-  "lqip": "backdrops/inglourious-basterds.lqip.webp"
+  "lqip": "backdrops/inglourious-basterds.lqip.webp",
+  "still": "stills/inglourious-basterds.webp",
+  "still_lqip": "stills/inglourious-basterds.lqip.webp"
  },
  {
   "title": "Megamind",
@@ -1453,7 +1563,9 @@
   "youtube_id": "GNAJWwqr8cM",
   "poster": "posters/megamind.webp",
   "backdrop": "backdrops/megamind.webp",
-  "lqip": "backdrops/megamind.lqip.webp"
+  "lqip": "backdrops/megamind.lqip.webp",
+  "still": "stills/megamind.webp",
+  "still_lqip": "stills/megamind.lqip.webp"
  },
  {
   "title": "Happy Feet Two",
@@ -1479,7 +1591,9 @@
   "youtube_id": null,
   "poster": "posters/happy-feet-two.webp",
   "backdrop": "backdrops/happy-feet-two.webp",
-  "lqip": "backdrops/happy-feet-two.lqip.webp"
+  "lqip": "backdrops/happy-feet-two.lqip.webp",
+  "still": "stills/happy-feet-two.webp",
+  "still_lqip": "stills/happy-feet-two.lqip.webp"
  },
  {
   "title": "Moneyball",
@@ -1505,7 +1619,9 @@
   "youtube_id": null,
   "poster": "posters/moneyball.webp",
   "backdrop": "backdrops/moneyball.webp",
-  "lqip": "backdrops/moneyball.lqip.webp"
+  "lqip": "backdrops/moneyball.lqip.webp",
+  "still": "stills/moneyball.webp",
+  "still_lqip": "stills/moneyball.lqip.webp"
  },
  {
   "title": "The Tree of Life",
@@ -1531,7 +1647,9 @@
   "youtube_id": null,
   "poster": "posters/the-tree-of-life.webp",
   "backdrop": "backdrops/the-tree-of-life.webp",
-  "lqip": "backdrops/the-tree-of-life.lqip.webp"
+  "lqip": "backdrops/the-tree-of-life.lqip.webp",
+  "still": "stills/the-tree-of-life.webp",
+  "still_lqip": "stills/the-tree-of-life.lqip.webp"
  },
  {
   "title": "Killing Them Softly",
@@ -1557,7 +1675,9 @@
   "youtube_id": null,
   "poster": "posters/killing-them-softly.webp",
   "backdrop": "backdrops/killing-them-softly.webp",
-  "lqip": "backdrops/killing-them-softly.lqip.webp"
+  "lqip": "backdrops/killing-them-softly.lqip.webp",
+  "still": "stills/killing-them-softly.webp",
+  "still_lqip": "stills/killing-them-softly.lqip.webp"
  },
  {
   "title": "12 Years a Slave",
@@ -1583,7 +1703,9 @@
   "youtube_id": null,
   "poster": "posters/12-years-a-slave.webp",
   "backdrop": "backdrops/12-years-a-slave.webp",
-  "lqip": "backdrops/12-years-a-slave.lqip.webp"
+  "lqip": "backdrops/12-years-a-slave.lqip.webp",
+  "still": "stills/12-years-a-slave.webp",
+  "still_lqip": "stills/12-years-a-slave.lqip.webp"
  },
  {
   "title": "The Counselor",
@@ -1609,7 +1731,9 @@
   "youtube_id": "5luqqt6Ly_o",
   "poster": "posters/the-counselor.webp",
   "backdrop": "backdrops/the-counselor.webp",
-  "lqip": "backdrops/the-counselor.lqip.webp"
+  "lqip": "backdrops/the-counselor.lqip.webp",
+  "still": "stills/the-counselor.webp",
+  "still_lqip": "stills/the-counselor.lqip.webp"
  },
  {
   "title": "World War Z",
@@ -1635,7 +1759,9 @@
   "youtube_id": null,
   "poster": "posters/world-war-z.webp",
   "backdrop": "backdrops/world-war-z.webp",
-  "lqip": "backdrops/world-war-z.lqip.webp"
+  "lqip": "backdrops/world-war-z.lqip.webp",
+  "still": "stills/world-war-z.webp",
+  "still_lqip": "stills/world-war-z.lqip.webp"
  },
  {
   "title": "Fury",
@@ -1661,7 +1787,9 @@
   "youtube_id": "_RguU_4OIXw",
   "poster": "posters/fury.webp",
   "backdrop": "backdrops/fury.webp",
-  "lqip": "backdrops/fury.lqip.webp"
+  "lqip": "backdrops/fury.lqip.webp",
+  "still": "stills/fury.webp",
+  "still_lqip": "stills/fury.lqip.webp"
  },
  {
   "title": "By the Sea",
@@ -1687,7 +1815,9 @@
   "youtube_id": null,
   "poster": "posters/by-the-sea.webp",
   "backdrop": "backdrops/by-the-sea.webp",
-  "lqip": "backdrops/by-the-sea.lqip.webp"
+  "lqip": "backdrops/by-the-sea.lqip.webp",
+  "still": "stills/by-the-sea.webp",
+  "still_lqip": "stills/by-the-sea.lqip.webp"
  },
  {
   "title": "The Audition",
@@ -1713,7 +1843,9 @@
   "youtube_id": null,
   "poster": "posters/the-audition.webp",
   "backdrop": "backdrops/the-audition.webp",
-  "lqip": "backdrops/the-audition.lqip.webp"
+  "lqip": "backdrops/the-audition.lqip.webp",
+  "still": "stills/the-audition.webp",
+  "still_lqip": "stills/the-audition.lqip.webp"
  },
  {
   "title": "The Big Short",
@@ -1739,7 +1871,9 @@
   "youtube_id": null,
   "poster": "posters/the-big-short.webp",
   "backdrop": "backdrops/the-big-short.webp",
-  "lqip": "backdrops/the-big-short.lqip.webp"
+  "lqip": "backdrops/the-big-short.lqip.webp",
+  "still": "stills/the-big-short.webp",
+  "still_lqip": "stills/the-big-short.lqip.webp"
  },
  {
   "title": "Allied",
@@ -1765,7 +1899,9 @@
   "youtube_id": null,
   "poster": "posters/allied.webp",
   "backdrop": "backdrops/allied.webp",
-  "lqip": "backdrops/allied.lqip.webp"
+  "lqip": "backdrops/allied.lqip.webp",
+  "still": "stills/allied.webp",
+  "still_lqip": "stills/allied.lqip.webp"
  },
  {
   "title": "The Jim Jefferies Show",
@@ -1791,7 +1927,9 @@
   "youtube_id": null,
   "poster": "posters/the-jim-jefferies-show.webp",
   "backdrop": "backdrops/the-jim-jefferies-show.webp",
-  "lqip": "backdrops/the-jim-jefferies-show.lqip.webp"
+  "lqip": "backdrops/the-jim-jefferies-show.lqip.webp",
+  "still": "stills/the-jim-jefferies-show.webp",
+  "still_lqip": "stills/the-jim-jefferies-show.lqip.webp"
  },
  {
   "title": "War Machine",
@@ -1817,7 +1955,9 @@
   "youtube_id": null,
   "poster": "posters/war-machine.webp",
   "backdrop": "backdrops/war-machine.webp",
-  "lqip": "backdrops/war-machine.lqip.webp"
+  "lqip": "backdrops/war-machine.lqip.webp",
+  "still": "stills/war-machine.webp",
+  "still_lqip": "stills/war-machine.lqip.webp"
  },
  {
   "title": "Deadpool 2",
@@ -1843,7 +1983,9 @@
   "youtube_id": "E65ScJChCpQ",
   "poster": "posters/deadpool-2.webp",
   "backdrop": "backdrops/deadpool-2.webp",
-  "lqip": "backdrops/deadpool-2.lqip.webp"
+  "lqip": "backdrops/deadpool-2.lqip.webp",
+  "still": "stills/deadpool-2.webp",
+  "still_lqip": "stills/deadpool-2.lqip.webp"
  },
  {
   "title": "Ad Astra",
@@ -1869,7 +2011,9 @@
   "youtube_id": null,
   "poster": "posters/ad-astra.webp",
   "backdrop": "backdrops/ad-astra.webp",
-  "lqip": "backdrops/ad-astra.lqip.webp"
+  "lqip": "backdrops/ad-astra.lqip.webp",
+  "still": "stills/ad-astra.webp",
+  "still_lqip": "stills/ad-astra.lqip.webp"
  },
  {
   "title": "Once Upon a Time in Hollywood",
@@ -1895,7 +2039,9 @@
   "youtube_id": "wLuLOoteD7M",
   "poster": "posters/once-upon-a-time-in-hollywood.webp",
   "backdrop": "backdrops/once-upon-a-time-in-hollywood.webp",
-  "lqip": "backdrops/once-upon-a-time-in-hollywood.lqip.webp"
+  "lqip": "backdrops/once-upon-a-time-in-hollywood.lqip.webp",
+  "still": "stills/once-upon-a-time-in-hollywood.webp",
+  "still_lqip": "stills/once-upon-a-time-in-hollywood.lqip.webp"
  },
  {
   "title": "Saturday Night Live",
@@ -1921,7 +2067,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/saturday-night-live-2020.webp",
-  "lqip": "backdrops/saturday-night-live-2020.lqip.webp"
+  "lqip": "backdrops/saturday-night-live-2020.lqip.webp",
+  "still": "stills/saturday-night-live-2020.webp",
+  "still_lqip": "stills/saturday-night-live-2020.lqip.webp"
  },
  {
   "title": "Babylon",
@@ -1947,7 +2095,9 @@
   "youtube_id": "ku1_6ZHAEpg",
   "poster": "posters/babylon.webp",
   "backdrop": "backdrops/babylon.webp",
-  "lqip": "backdrops/babylon.lqip.webp"
+  "lqip": "backdrops/babylon.lqip.webp",
+  "still": "stills/babylon.webp",
+  "still_lqip": "stills/babylon.lqip.webp"
  },
  {
   "title": "Bullet Train",
@@ -1973,7 +2123,9 @@
   "youtube_id": null,
   "poster": "posters/bullet-train.webp",
   "backdrop": "backdrops/bullet-train.webp",
-  "lqip": "backdrops/bullet-train.lqip.webp"
+  "lqip": "backdrops/bullet-train.lqip.webp",
+  "still": "stills/bullet-train.webp",
+  "still_lqip": "stills/bullet-train.lqip.webp"
  },
  {
   "title": "The Lost City",
@@ -1999,7 +2151,9 @@
   "youtube_id": "wRp0YRk2luo",
   "poster": "posters/the-lost-city.webp",
   "backdrop": "backdrops/the-lost-city.webp",
-  "lqip": "backdrops/the-lost-city.lqip.webp"
+  "lqip": "backdrops/the-lost-city.lqip.webp",
+  "still": "stills/the-lost-city.webp",
+  "still_lqip": "stills/the-lost-city.lqip.webp"
  },
  {
   "title": "Dave",
@@ -2025,7 +2179,9 @@
   "youtube_id": null,
   "poster": null,
   "backdrop": "backdrops/dave.webp",
-  "lqip": "backdrops/dave.lqip.webp"
+  "lqip": "backdrops/dave.lqip.webp",
+  "still": "stills/dave.webp",
+  "still_lqip": "stills/dave.lqip.webp"
  },
  {
   "title": "IF",
@@ -2051,7 +2207,9 @@
   "youtube_id": null,
   "poster": "posters/if.webp",
   "backdrop": "backdrops/if.webp",
-  "lqip": "backdrops/if.lqip.webp"
+  "lqip": "backdrops/if.lqip.webp",
+  "still": "stills/if.webp",
+  "still_lqip": "stills/if.lqip.webp"
  },
  {
   "title": "Wolfs",
@@ -2077,7 +2235,9 @@
   "youtube_id": null,
   "poster": "posters/wolfs.webp",
   "backdrop": "backdrops/wolfs.webp",
-  "lqip": "backdrops/wolfs.lqip.webp"
+  "lqip": "backdrops/wolfs.lqip.webp",
+  "still": "stills/wolfs.webp",
+  "still_lqip": "stills/wolfs.lqip.webp"
  },
  {
   "title": "F1",
@@ -2103,7 +2263,9 @@
   "youtube_id": null,
   "poster": "posters/f1.webp",
   "backdrop": "backdrops/f1.webp",
-  "lqip": "backdrops/f1.lqip.webp"
+  "lqip": "backdrops/f1.lqip.webp",
+  "still": "stills/f1.webp",
+  "still_lqip": "stills/f1.lqip.webp"
  },
  {
   "title": "Heart of the Beast",
@@ -2129,7 +2291,9 @@
   "youtube_id": null,
   "poster": "posters/heart-of-the-beast.webp",
   "backdrop": "backdrops/heart-of-the-beast.webp",
-  "lqip": "backdrops/heart-of-the-beast.lqip.webp"
+  "lqip": "backdrops/heart-of-the-beast.lqip.webp",
+  "still": "stills/heart-of-the-beast.webp",
+  "still_lqip": "stills/heart-of-the-beast.lqip.webp"
  },
  {
   "title": "The Adventures of Cliff Booth",
@@ -2155,6 +2319,8 @@
   "youtube_id": null,
   "poster": "posters/the-adventures-of-cliff-booth.webp",
   "backdrop": "backdrops/the-adventures-of-cliff-booth.webp",
-  "lqip": "backdrops/the-adventures-of-cliff-booth.lqip.webp"
+  "lqip": "backdrops/the-adventures-of-cliff-booth.lqip.webp",
+  "still": "stills/the-adventures-of-cliff-booth.webp",
+  "still_lqip": "stills/the-adventures-of-cliff-booth.lqip.webp"
  }
 ]

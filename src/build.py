@@ -46,6 +46,9 @@ def load_films() -> list[dict]:
         bd = DATA / "backdrops" / f"{f['slug']}.webp"
         f["backdrop"] = f"backdrops/{f['slug']}.webp" if bd.exists() else None
         f["lqip"] = f"backdrops/{f['slug']}.lqip.webp" if bd.exists() else None
+        st = DATA / "stills" / f"{f['slug']}.webp"
+        f["still"] = f"stills/{f['slug']}.webp" if st.exists() else None
+        f["still_lqip"] = f"stills/{f['slug']}.lqip.webp" if st.exists() else None
     return films
 
 
@@ -154,10 +157,21 @@ def poster_html(f: dict, base: str, sizes: str = "(max-width: 600px) 45vw, 220px
     return f'<div class="poster-fallback" aria-hidden="true"><span>{e(f["title"])}</span><small>{f["year"]}</small></div>'
 
 
+FEATURED = [
+    "once-upon-a-time-in-hollywood", "fight-club", "fury", "seven", "troy", "inglourious-basterds",
+    "bullet-train", "f1", "legends-of-the-fall", "the-curious-case-of-benjamin-button", "oceans-eleven",
+    "moneyball", "world-war-z", "babylon", "snatch", "meet-joe-black", "ad-astra", "thelma-and-louise",
+    "interview-with-the-vampire", "12-monkeys", "mr-and-mrs-smith", "the-assassination-of-jesse-james-by-the-coward-robert-ford",
+    "heart-of-the-beast", "burn-after-reading", "kalifornia", "a-river-runs-through-it",
+]
+SPOTLIGHT = ["once-upon-a-time-in-hollywood", "fight-club", "fury", "seven", "troy", "f1"]
+
+
 def card(f: dict) -> str:
     vk = verdict_key(f)
     kind = "Series" if f["type"] == "tv" else "Film"
-    return f"""<li class="card{' is-unreleased' if f.get('unreleased') else ''}" data-slug="{f['slug']}" data-verdict="{vk}" data-year="{f['year']}" data-type="{f['type']}" data-title="{e(f['title'].lower())}" data-character="{e((f.get('character') or '').lower())}">
+    feat = FEATURED.index(f["slug"]) if f["slug"] in FEATURED else 99
+    return f"""<li class="card{' is-unreleased' if f.get('unreleased') else ''}" data-slug="{f['slug']}" data-verdict="{vk}" data-year="{f['year']}" data-type="{f['type']}" data-feat="{feat}" data-title="{e(f['title'].lower())}" data-character="{e((f.get('character') or '').lower())}">
   <a class="card-link" href="film/{f['slug']}/">
     <div class="poster">{poster_html(f, "")}
       <div class="curtain" aria-hidden="true"><span class="curtain-l"></span><span class="curtain-r"></span></div>
@@ -173,83 +187,119 @@ def card(f: dict) -> str:
 
 def card_button(f: dict, vk: str) -> str:
     if f.get("unreleased"):
-        return f'<p class="reveal-btn is-unreleased">Not released yet. {e(f["unreleased"])}</p>'
+        return f'<p class="card-unreleased">Not released yet. {e(f["unreleased"])}</p>'
     vword, _ = split_verdict(f)
-    return (f'<div class="card-actions">'
-            f'<button class="reveal-btn" type="button" data-reveal="{f["slug"]}" aria-label="Reveal whether Brad Pitt dies in {e(f["title"])}">'
-            f'<span class="when-sealed">Reveal</span><span class="when-revealed">{e(vword)} {TEASE[vk]}</span></button>'
-            f'<a class="spoil-link" href="film/{f["slug"]}/?spoil=1" aria-label="How it happens in {e(f["title"])}">How?</a>'
-            f'</div>')
+    return (
+        f'<div class="card-guess" data-guess-box>'
+        f'<p class="cg-q">Does he make it?</p>'
+        f'<div class="cg-btns" role="group" aria-label="Your guess for {e(f["title"])}">'
+        f'<button type="button" class="cg-btn" data-cguess="dies">He dies</button>'
+        f'<button type="button" class="cg-btn" data-cguess="survives">He survives</button></div>'
+        f'<button type="button" class="cg-reveal" data-reveal="{f["slug"]}">Just reveal it</button>'
+        f'</div>'
+        f'<div class="card-result" data-result-box hidden>'
+        f'<p class="cr-call" data-call></p>'
+        f'<p class="cr-verdict"><b>{e(vword)}</b> {TEASE[vk]}</p>'
+        f'<div class="cr-links"><a class="spoil-link" href="film/{f["slug"]}/?spoil=1">How it happens</a>'
+        f'<button type="button" class="cr-seal" data-cseal>Seal</button></div>'
+        f'</div>'
+    )
+
+
+def spotlight(films: list[dict]) -> str:
+    by = {f["slug"]: f for f in films}
+    slides = []
+    for i, slug in enumerate(SPOTLIGHT):
+        f = by.get(slug)
+        if not f:
+            continue
+        art = f.get("still") or f.get("backdrop")
+        if not art:
+            continue
+        lq = f.get("still_lqip") or ""
+        meta = " &middot; ".join(x for x in [str(f["year"]), e(f.get("director") or ""), e(f.get("character") or "")] if x)
+        slides.append(
+            f"""<li class="slide{' is-on' if i == 0 else ''}" data-i="{i}">
+      <img class="slide-art" src="{art}" alt="{e(f['title'])} publicity still" width="1600" height="900" {'fetchpriority="high"' if i == 0 else 'loading="lazy"'} decoding="async"{(' style="background-image:url(' + lq + ')"') if lq else ''}>
+      <div class="slide-body">
+        <p class="slide-kicker">In the spotlight <span class="slide-n">{i + 1:02d} / {len(SPOTLIGHT):02d}</span></p>
+        <p class="slide-meta">{meta}</p>
+        <h2 class="slide-title">{e(f['title'])}</h2>
+        <div class="slide-cta">
+          <a class="btn-primary" href="film/{slug}/">Open the case</a>
+          <button type="button" class="btn-ghost" data-spot-guess="{slug}">Guess now</button>
+        </div>
+        <p class="slide-fine">The answer stays hidden until you ask.</p>
+      </div>
+    </li>"""
+        )
+    dots = "".join(f'<button type="button" class="dot{" is-on" if i == 0 else ""}" data-dot="{i}" aria-label="Slide {i + 1}">{i + 1:02d}</button>' for i in range(len(slides)))
+    return f"""<section class="spot-wrap" aria-label="In the spotlight">
+  <ul class="spotlight" data-spotlight>
+{chr(10).join(slides)}
+  </ul>
+  <div class="dots">{dots}</div>
+</section>"""
 
 
 # ---------------------------------------------------------------- pages
 def build_index(films: list[dict]) -> str:
     counts = Counter(verdict_key(f) for f in films)
-    decades: dict[int, list[dict]] = {}
-    for f in films:
-        decades.setdefault(f["year"] // 10 * 10, []).append(f)
-    rotor_items = [
-        {"t": f["title"], "b": f["poster"]}
-        for f in films
-        if f["role_size"] in ("lead", "supporting") and len(f["title"]) <= 22 and not f.get("unreleased")
-    ]
-    titles_json = json.dumps(rotor_items)
-    first_bd = next((r["b"] for r in rotor_items if r["b"]), None)
-    hero_bd = (
-        f'<div class="hero-bd" aria-hidden="true"><img class="hero-bd-img is-on" src="{first_bd}" alt="" width="600" height="900" fetchpriority="high"><img class="hero-bd-img" alt="" width="600" height="900"></div>'
-        if first_bd else ""
-    )
-
-    sections = []
-    for dec, fs in sorted(decades.items()):
-        sections.append(
-            f"""<section class="decade" aria-labelledby="d{dec}">
-  <h2 class="decade-h" id="d{dec}"><span>{dec}s</span><small>{len(fs)} title{'s' if len(fs) != 1 else ''}</small></h2>
-  <ul class="grid">
-{chr(10).join(card(f) for f in fs)}
-  </ul>
-</section>"""
-        )
-
     desc = (
         f"Every Brad Pitt movie and TV appearance, {films[0]['year']} to {films[-1]['year']}, with the one "
         "answer that matters kept sealed until you choose to reveal it."
     )
-    body = f"""<section class="hero{' has-bd' if hero_bd else ''}">
-  {hero_bd}
-  <p class="hero-kicker">A spoiler-sealed reference to {len(films)} films and shows</p>
-  <h1 class="hero-q">Does Brad Pitt die in <span class="rotor" data-titles='{e(titles_json)}'><span class="rotor-word">Fury</span></span><span class="q-mark">?</span></h1>
-  <p class="hero-sub">Find the title. Decide if you want to know. Reveal the moment on your own terms.</p>
+    body = f"""<section class="hero">
+  <div class="hero-row">
+    <div>
+      <p class="hero-kicker">The Brad Pitt film archive <span class="sep">&middot;</span> {films[0]['year']} to {films[-1]['year']}</p>
+      <h1 class="hero-q">Does Brad Pitt <em>die?</em></h1>
+    </div>
+    <p class="hero-tag">One actor. {len(films)} stories.<br>The ending is yours to uncover.</p>
+  </div>
   <form class="search" role="search" onsubmit="return false">
-    <label class="visually-hidden" for="q">Search titles or characters</label>
-    <input id="q" class="search-input" type="search" placeholder="Search a title or character" autocomplete="off" spellcheck="false">
+    <label class="visually-hidden" for="q">Search titles, characters or years</label>
+    <div class="search-box">
+      <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <input id="q" class="search-input" type="search" placeholder="Find a film, character, or year" autocomplete="off" spellcheck="false">
+      <kbd class="search-kbd" aria-hidden="true">/</kbd>
+    </div>
+    <p class="search-note">Spoilers sealed. Always your call.</p>
+  </form>
+</section>
+
+{spotlight(films)}
+
+<section class="archive" id="films">
+  <div class="archive-head">
+    <h2 class="archive-h">The filmography <small>{len(films)} titles</small></h2>
+    <button type="button" class="surprise" data-surprise>Surprise me</button>
+  </div>
+  <div class="controls">
     <div class="chips" role="group" aria-label="Filter">
-      <button type="button" class="chip is-on" data-filter="all" aria-pressed="true">All <b>{len(films)}</b></button>
+      <button type="button" class="chip is-on" data-filter="all" aria-pressed="true">All titles</button>
       <button type="button" class="chip" data-filter="film" aria-pressed="false">Films</button>
-      <button type="button" class="chip" data-filter="tv" aria-pressed="false">TV</button>
+      <button type="button" class="chip" data-filter="tv" aria-pressed="false">Television</button>
       <button type="button" class="chip chip-spoiler" data-filter="revealed" aria-pressed="false">Revealed by me</button>
     </div>
-  </form>
-  <p class="hero-note" id="result-count" aria-live="polite"></p>
+    <div class="selects">
+      <label class="sel"><span class="visually-hidden">Decade</span><select id="decade"><option value="">Every decade</option><option value="1980">1980s</option><option value="1990">1990s</option><option value="2000">2000s</option><option value="2010">2010s</option><option value="2020">2020s</option></select></label>
+      <label class="sel"><span class="visually-hidden">Sort</span><select id="sort"><option value="featured">Featured first</option><option value="new">Newest first</option><option value="old">Oldest first</option><option value="az">Title A to Z</option></select></label>
+    </div>
+  </div>
+  <p class="hero-note" id="result-count" aria-live="polite">{len(films)} titles in the archive</p>
+  <ul class="grid" id="grid">
+{chr(10).join(card(f) for f in films)}
+  </ul>
+  <p class="empty" id="empty" hidden>Nothing matches. Try a shorter search, or a character name like “Tyler”.</p>
 </section>
 
-<section class="ledger-tease" aria-label="Running totals">
-  <a class="tease" href="stats/">
-    <span class="tease-n" data-count="{counts['dies']}">?</span><span class="tease-l">deaths on screen</span>
-  </a>
-  <a class="tease" href="stats/">
-    <span class="tease-n" data-count="{counts['survives']}">?</span><span class="tease-l">walked away</span>
-  </a>
-  <a class="tease" href="stats/">
-    <span class="tease-n" data-count="{counts['ambiguous']}">?</span><span class="tease-l">it's complicated</span>
-  </a>
-  <p class="tease-hint">Totals unlock when you reveal all. Or visit the ledger, where nothing is sealed.</p>
+<section class="closing" aria-label="The ledger">
+  <p class="page-kicker">Curious about the big picture?</p>
+  <h2 class="closing-h">A career. A few close calls.</h2>
+  <p class="closing-sub">Every ending across four decades, tallied. <span class="tease-n" data-count="{counts['dies']}">?</span> deaths, <span class="tease-n" data-count="{counts['survives']}">?</span> survivals, <span class="tease-n" data-count="{counts['ambiguous']}">?</span> complicated. The ledger contains spoilers.</p>
+  <a class="btn-primary" href="stats/">Open the spoiler ledger</a>
 </section>
-
-<div id="films">
-{chr(10).join(sections)}
-</div>
-<p class="empty" id="empty" hidden>Nothing matches. Try a shorter search, or a character name like “Tyler”.</p>
 """
     ld = {
         "@context": "https://schema.org",
@@ -317,7 +367,7 @@ def build_film(f: dict) -> str:
           <button type="button" class="guess-btn" data-guess="dies">He dies</button>
         </div>
         <button type="button" class="reveal-big" data-reveal="{f['slug']}">Just reveal it</button>
-        {'<button type="button" class="hint-btn" data-hint-btn><span class="hint-eye" aria-hidden="true"></span>Give me a hint</button>' if f.get('backdrop') else ''}
+        {'<button type="button" class="hint-btn" data-hint-btn><span class="hint-eye" aria-hidden="true"></span>Give me a hint</button>' if (f.get('backdrop') or f.get('still')) else ''}
         <p class="seal-fine">Revealing shows only the answer. Everything else stays behind its own curtain.</p>
       </div>"""
     if f.get("unreleased"):
@@ -330,11 +380,12 @@ def build_film(f: dict) -> str:
         f'<div class="film-bd is-loaded" aria-hidden="true"><img class="film-bd-img" src="{base}{f["poster"]}" alt="" width="600" height="900" decoding="async"></div>'
         if f.get("poster") else ""
     )
+    hint_src = f.get("still") or f.get("backdrop")
     hint = (
         f'<div class="hint" data-hint hidden><div class="hint-bar hint-bar-t"></div><div class="hint-bar hint-bar-b"></div>'
-        f'<img class="hint-img" src="{base}{f["backdrop"]}" alt="A frame from {e(f["title"])}" width="1280" height="720" loading="lazy" decoding="async">'
+        f'<img class="hint-img" src="{base}{hint_src}" alt="A frame from {e(f["title"])}" width="1600" height="900" loading="lazy" decoding="async">'
         f'<p class="hint-cap">A frame from the film. That is all you get.</p></div>'
-        if f.get("backdrop") else ""
+        if hint_src else ""
     )
     next_pool = json.dumps([{"s": x["slug"], "t": x["title"], "y": x["year"]} for x in ALL_FILMS if not x.get("unreleased") and x["slug"] != f["slug"]])
     body = f"""<article class="film{' is-unreleased' if f.get('unreleased') else ''}{' has-bd' if film_bd else ''}" data-slug="{f['slug']}" data-verdict="{vk}" data-pool='{e(next_pool)}'>
@@ -589,11 +640,12 @@ def main() -> None:
             + header(2) + blog.post_html(p, SITE) + footer(2),
         )
     shutil.copy(SRC / "static" / "giscus.css", DIST / "assets" / "giscus.css")
-    backdrops = DATA / "backdrops"
-    if backdrops.exists():
-        (DIST / "backdrops").mkdir(exist_ok=True)
-        for p in backdrops.glob("*.webp"):
-            shutil.copy(p, DIST / "backdrops" / p.name)
+    for folder in ("backdrops", "stills"):
+        src_dir = DATA / folder
+        if src_dir.exists():
+            (DIST / folder).mkdir(exist_ok=True)
+            for p in src_dir.glob("*.webp"):
+                shutil.copy(p, DIST / folder / p.name)
     urls = ["/", "/stats/", "/about/"] + [f"/film/{f['slug']}/" for f in films]
     write(
         DIST / "sitemap.xml",

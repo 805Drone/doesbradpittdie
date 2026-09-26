@@ -41,7 +41,17 @@
     var btn = document.querySelector('[data-seal-toggle]');
     if (btn) btn.setAttribute('aria-pressed', String(state.all));
     document.querySelectorAll('.card').forEach(function (card) {
-      if (!card.classList.contains('is-unreleased')) card.classList.toggle('is-revealed', stageOf(card.dataset.slug) > 0);
+      if (card.classList.contains('is-unreleased')) return;
+      var open = stageOf(card.dataset.slug) > 0;
+      card.classList.toggle('is-revealed', open);
+      var gb = card.querySelector('[data-guess-box]'), rb = card.querySelector('[data-result-box]');
+      if (gb) gb.hidden = open;
+      if (rb) {
+        rb.hidden = !open;
+        var c = rb.querySelector('[data-call]');
+        var gd = state.guessed[card.dataset.slug];
+        if (c) { c.hidden = !gd; c.textContent = gd === 'right' ? 'You called it.' : gd === 'wrong' ? 'You guessed wrong.' : gd === 'na' ? 'Trick question.' : ''; c.className = 'cr-call ' + (gd === 'right' ? 'is-right' : gd === 'wrong' ? 'is-wrong' : gd ? 'is-na' : ''); }
+      }
     });
     document.querySelectorAll('.tease-n').forEach(function (n) {
       if (state.all) countUp(n, +n.dataset.count); else n.textContent = '?';
@@ -68,22 +78,109 @@
     filterGrid();
   });
 
-  /* ---------- grid cards */
-  document.addEventListener('click', function (ev) {
-    var b = ev.target.closest('.card .reveal-btn');
-    if (!b) return;
-    var card = b.closest('.card');
-    var slug = card.dataset.slug;
-    if (card.classList.contains('is-revealed')) {
-      if (state.all) return;
-      setStage(slug, 0);
-      card.classList.remove('is-revealed');
-    } else {
-      setStage(slug, 1);
-      card.classList.add('is-revealed');
-      if (!reduce) { card.classList.add('is-slamming'); setTimeout(function () { card.classList.remove('is-slamming'); }, 900); }
+  /* ---------- scoring shared by cards, spotlight and film pages */
+  function scoreGuess(slug, actual, guess) {
+    if (state.guessed[slug]) return { msg: 'Already guessed. It only counts once.', cls: 'is-dup' };
+    if (actual === 'ambiguous') { state.guessed[slug] = 'na'; save(); return { msg: 'Trick question. No points either way.', cls: 'is-na' }; }
+    if (actual === guess) {
+      state.guesses.right++; state.guesses.streak++; state.guesses.best = Math.max(state.guesses.best, state.guesses.streak);
+      state.guessed[slug] = 'right'; save();
+      return { msg: 'You called it.' + (state.guesses.streak > 1 ? ' Streak ' + state.guesses.streak + '.' : ''), cls: 'is-right' };
     }
-    filterGrid(true);
+    state.guesses.wrong++; state.guesses.streak = 0; state.guessed[slug] = 'wrong'; save();
+    return { msg: 'Not this time.', cls: 'is-wrong' };
+  }
+
+  /* ---------- grid cards: guess inline, reveal, seal */
+  function revealCard(card, call) {
+    card.classList.add('is-revealed');
+    var gb = card.querySelector('[data-guess-box]'), rb = card.querySelector('[data-result-box]');
+    if (gb) gb.hidden = true;
+    if (rb) {
+      rb.hidden = false;
+      var c = rb.querySelector('[data-call]');
+      if (c) { c.textContent = call ? call.msg : ''; c.className = 'cr-call ' + (call ? call.cls : ''); c.hidden = !call; }
+    }
+    if (!reduce) { card.classList.add('is-slamming'); setTimeout(function () { card.classList.remove('is-slamming'); }, 900); }
+  }
+  function sealCard(card) {
+    card.classList.remove('is-revealed');
+    var gb = card.querySelector('[data-guess-box]'), rb = card.querySelector('[data-result-box]');
+    if (gb) gb.hidden = false;
+    if (rb) rb.hidden = true;
+  }
+  document.addEventListener('click', function (ev) {
+    var card = ev.target.closest('.card');
+    if (!card) return;
+    var slug = card.dataset.slug;
+    var g = ev.target.closest('[data-cguess]');
+    var r = ev.target.closest('.card [data-reveal]');
+    var s = ev.target.closest('[data-cseal]');
+    if (g) {
+      var call = scoreGuess(slug, card.dataset.verdict, g.dataset.cguess);
+      setStage(slug, 1);
+      revealCard(card, call);
+      filterGrid(true);
+    } else if (r) {
+      setStage(slug, 1);
+      revealCard(card, null);
+      filterGrid(true);
+    } else if (s) {
+      if (state.all) { state.all = false; applyAll(); }
+      setStage(slug, 0);
+      sealCard(card);
+      filterGrid(true);
+    }
+  });
+
+  /* ---------- spotlight carousel */
+  var spot = document.querySelector('[data-spotlight]');
+  if (spot) {
+    var slides = spot.querySelectorAll('.slide');
+    var dots = document.querySelectorAll('[data-dot]');
+    var cur = 0, spotTimer;
+    function go(n, manual) {
+      cur = (n + slides.length) % slides.length;
+      slides.forEach(function (s, i) { s.classList.toggle('is-on', i === cur); });
+      dots.forEach(function (d, i) { d.classList.toggle('is-on', i === cur); });
+      if (manual) restart();
+    }
+    function restart() {
+      clearInterval(spotTimer);
+      if (reduce || slides.length < 2) return;
+      spotTimer = setInterval(function () { if (!document.hidden) go(cur + 1); }, 6500);
+    }
+    dots.forEach(function (d) { d.addEventListener('click', function () { go(+d.dataset.dot, true); }); });
+    spot.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') go(cur + 1, true); if (e.key === 'ArrowLeft') go(cur - 1, true); });
+    var sx = null;
+    spot.addEventListener('pointerdown', function (e) { sx = e.clientX; });
+    spot.addEventListener('pointerup', function (e) { if (sx !== null && Math.abs(e.clientX - sx) > 40) go(cur + (e.clientX < sx ? 1 : -1), true); sx = null; });
+    restart();
+    /* "Guess now" jumps to that title's card and lights it up */
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-spot-guess]');
+      if (!b) return;
+      var card = document.querySelector('.card[data-slug="' + b.dataset.spotGuess + '"]');
+      if (!card) return;
+      if (q) { q.value = ''; }
+      filter = 'all'; chips.forEach(function (c) { var on = c.dataset.filter === 'all'; c.classList.toggle('is-on', on); c.setAttribute('aria-pressed', String(on)); });
+      var dec = document.getElementById('decade'); if (dec) dec.value = '';
+      filterGrid();
+      card.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      card.classList.add('is-lit');
+      setTimeout(function () { card.classList.remove('is-lit'); }, 2600);
+      var first = card.querySelector('[data-cguess]'); if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, 700);
+    });
+  }
+
+  /* ---------- surprise me */
+  document.addEventListener('click', function (ev) {
+    if (!ev.target.closest('[data-surprise]')) return;
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.card:not(.is-unreleased)'));
+    var fresh = cards.filter(function (c) { return !state.guessed[c.dataset.slug] && !c.classList.contains('is-revealed'); });
+    var pick = (fresh.length ? fresh : cards)[Math.floor(Math.random() * (fresh.length ? fresh : cards).length)];
+    if (!pick) return;
+    location.href = 'film/' + pick.dataset.slug + '/';
   });
 
   /* ---------- 3D tilt on posters (pointer devices only) */
@@ -139,29 +236,45 @@
   var chips = document.querySelectorAll('.chip');
   var filter = 'all';
   function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  var decadeSel = document.getElementById('decade');
+  var sortSel = document.getElementById('sort');
+  function sortGrid() {
+    var grid = document.getElementById('grid');
+    if (!grid || !sortSel) return;
+    var mode = sortSel.value;
+    var cards = Array.prototype.slice.call(grid.children);
+    cards.sort(function (a, b) {
+      if (mode === 'new') return (+b.dataset.year - +a.dataset.year) || a.dataset.title.localeCompare(b.dataset.title);
+      if (mode === 'old') return (+a.dataset.year - +b.dataset.year) || a.dataset.title.localeCompare(b.dataset.title);
+      if (mode === 'az') return a.dataset.title.replace(/^the /, '').localeCompare(b.dataset.title.replace(/^the /, ''));
+      return (+a.dataset.feat - +b.dataset.feat) || (+b.dataset.year - +a.dataset.year);
+    });
+    cards.forEach(function (c) { grid.appendChild(c); });
+  }
   function filterGrid(keepCount) {
     var cards = document.querySelectorAll('.card');
     if (!cards.length) return;
     var term = norm(q && q.value.trim());
+    var dec = decadeSel ? decadeSel.value : '';
     var shown = 0;
     cards.forEach(function (c) {
       var ok = true;
       if (filter === 'film' || filter === 'tv') ok = c.dataset.type === filter;
       if (filter === 'revealed') ok = c.classList.contains('is-revealed');
+      if (ok && dec) ok = Math.floor(+c.dataset.year / 10) * 10 === +dec;
       if (ok && term) ok = norm(c.dataset.title).indexOf(term) > -1 || norm(c.dataset.character).indexOf(term) > -1 || c.dataset.year.indexOf(term) > -1;
       c.classList.toggle('is-hidden', !ok);
       if (ok) shown++;
-    });
-    document.querySelectorAll('.decade').forEach(function (d) {
-      d.hidden = !d.querySelector('.card:not(.is-hidden)');
     });
     var empty = document.getElementById('empty');
     if (empty) empty.hidden = shown > 0;
     var rc = document.getElementById('result-count');
     if (rc && !keepCount) {
-      rc.textContent = (term || filter !== 'all') ? shown + (shown === 1 ? ' title' : ' titles') : '';
+      rc.textContent = shown + (shown === 1 ? ' title' : ' titles') + ((term || filter !== 'all' || dec) ? ' match' : ' in the archive');
     }
   }
+  if (decadeSel) decadeSel.addEventListener('change', function () { filterGrid(); });
+  if (sortSel) sortSel.addEventListener('change', function () { sortGrid(); filterGrid(true); });
   if (q) {
     q.addEventListener('input', function () { filterGrid(); });
     q.addEventListener('keydown', function (e) { if (e.key === 'Escape') { q.value = ''; filterGrid(); } });
@@ -304,16 +417,10 @@
       var rs = ev.target.closest('[data-reseal]');
       var slug = film.dataset.slug;
       if (g) {
-        var actual = film.dataset.verdict;
-        var right = actual === g.dataset.guess;
-        var msg;
-        if (state.guessed[slug]) { msg = 'You already guessed this one. It only counts once.'; }
-        else if (actual === 'ambiguous') { msg = 'Trick question. This one is complicated. No points either way.'; state.guessed[slug] = 'na'; }
-        else if (right) { state.guesses.right++; state.guesses.streak++; state.guesses.best = Math.max(state.guesses.best, state.guesses.streak); msg = 'You called it.'; state.guessed[slug] = 'right'; }
-        else { state.guesses.wrong++; state.guesses.streak = 0; msg = 'Not this time.'; state.guessed[slug] = 'wrong'; }
+        var call = scoreGuess(slug, film.dataset.verdict, g.dataset.guess);
         setStage(slug, 1);
         syncFilm(film, true);
-        film.querySelector('[data-guess-result]').textContent = msg;
+        film.querySelector('[data-guess-result]').textContent = call.msg;
         suggestNext(film);
       } else if (r) {
         setStage(slug, 1);
@@ -353,6 +460,7 @@
     }
   }
 
+  sortGrid();
   applyAll();
   filterGrid();
   document.documentElement.classList.add('is-ready');
