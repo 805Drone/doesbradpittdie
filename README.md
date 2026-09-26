@@ -20,6 +20,21 @@ Live: https://doesbradpittdie.com (GitHub Pages, deployed from `dist/` on every 
 
 Preview locally: `python -m http.server 4070 --directory dist`.
 
+## Hints (trailer frames)
+
+`data/trailers.json` maps slug to a YouTube trailer ID (merged from `data/trailers_batch*.json`
+by `python src/merge_trailers.py`). `python src/backdrops.py` turns each into a 1280x720
+frame in `data/backdrops/`, used only for the "Give me a hint" iris on film pages. Posters
+are the consistent imagery everywhere else.
+
+## The back room (unlisted blog)
+
+Posts are `content/backroom/*.md` with `title`, `date`, `summary` front matter. They render to
+`/backroom/` and `/backroom/<slug>/`, are `noindex`, excluded from the sitemap and disallowed
+in robots.txt. Comments are giscus, backed by GitHub Discussions (category General) on this
+repo. Requirement: the giscus GitHub app must be installed on the repo
+(https://github.com/apps/giscus/installations/new).
+
 ## Layout
 
 - `src/build.py` static generator (Python 3.12, Pillow only)

@@ -9,9 +9,9 @@
   function load() {
     try {
       var s = JSON.parse(localStorage.getItem(KEY) || '{}');
-      return { stage: s.stage || {}, all: !!s.all, guesses: s.guesses || { right: 0, wrong: 0, streak: 0, best: 0 } };
+      return { stage: s.stage || {}, all: !!s.all, guesses: s.guesses || { right: 0, wrong: 0, streak: 0, best: 0 }, guessed: s.guessed || {} };
     } catch (e) {
-      return { stage: {}, all: false, guesses: { right: 0, wrong: 0, streak: 0, best: 0 } };
+      return { stage: {}, all: false, guesses: { right: 0, wrong: 0, streak: 0, best: 0 }, guessed: {} };
     }
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* private mode: fine */ } }
@@ -183,18 +183,34 @@
     var titles;
     try { titles = JSON.parse(rotor.dataset.titles); } catch (e) { titles = []; }
     var word = rotor.querySelector('.rotor-word');
+    var bdImgs = document.querySelectorAll('.hero-bd-img');
+    var bdOn = 0;
     var i = Math.floor(Math.random() * titles.length);
-    if (titles.length) word.textContent = titles[i];
+    function showBackdrop(src) {
+      if (!bdImgs.length || !src) return;
+      var next = bdImgs[1 - bdOn];
+      var pre = new Image();
+      pre.onload = function () {
+        next.src = src;
+        next.classList.add('is-on');
+        bdImgs[bdOn].classList.remove('is-on');
+        bdOn = 1 - bdOn;
+      };
+      pre.src = src;
+    }
+    if (titles.length) { word.textContent = titles[i].t; if (bdImgs.length && titles[i].b) { bdImgs[0].src = titles[i].b; } }
     setInterval(function () {
       if (document.hidden) return;
       rotor.classList.add('is-out');
       setTimeout(function () {
         i = (i + 1 + Math.floor(Math.random() * 5)) % titles.length;
-        word.textContent = titles[i];
+        word.textContent = titles[i].t;
         rotor.classList.remove('is-out');
+        showBackdrop(titles[i].b);
       }, 340);
-    }, 2600);
+    }, 3400);
   }
+
 
   /* ---------- film page: three gated stages */
   var film = document.querySelector('.film');
@@ -240,10 +256,47 @@
       if (total) streak.textContent = 'Your guesses: ' + g.right + ' of ' + total + ' right. Streak ' + g.streak + ', best ' + g.best + '.';
     }
   }
+  /* pick a title the visitor has not guessed yet, and offer it */
+  function suggestNext(film) {
+    var slot = film.querySelector('[data-next]');
+    if (!slot) return;
+    var pool;
+    try { pool = JSON.parse(film.dataset.pool || '[]'); } catch (e) { pool = []; }
+    var fresh = pool.filter(function (p) { return !state.guessed[p.s] && !state.stage[p.s]; });
+    if (!fresh.length) fresh = pool.filter(function (p) { return !state.guessed[p.s]; });
+    if (!fresh.length) { slot.textContent = 'You have guessed every title. Reveal all on the front page to see how you did.'; slot.hidden = false; return; }
+    var pick = fresh[Math.floor(Math.random() * fresh.length)];
+    slot.innerHTML = 'Keep the streak going. <a href="../' + pick.s + '/">Guess ' + pick.t + ' (' + pick.y + ')</a>';
+    slot.hidden = false;
+  }
+
+  /* the hint: iris open on one frame from the film, hold, close */
+  var hintTimer;
+  function showHint(film) {
+    var h = film.querySelector('[data-hint]');
+    if (!h || !h.hidden) return;
+    var btn = film.querySelector('[data-hint-btn]');
+    h.hidden = false;
+    void h.offsetWidth;
+    h.classList.add('is-on');
+    var close = function () {
+      clearTimeout(hintTimer);
+      h.classList.remove('is-on');
+      h.classList.add('is-out');
+      setTimeout(function () { h.classList.remove('is-out'); h.hidden = true; if (btn) btn.focus(); }, 700);
+    };
+    hintTimer = setTimeout(close, reduce ? 2500 : 4200);
+    h.addEventListener('click', close, { once: true });
+    var esc = function (ev) { if (ev.key === 'Escape') { close(); document.removeEventListener('keydown', esc); } };
+    document.addEventListener('keydown', esc);
+    if (btn) { btn.lastChild.textContent = 'Another look'; }
+  }
+
   if (film) {
     /* deep link from a card's "How?" opens straight to the moment */
     if (/[?&]spoil=1/.test(location.search) && stageOf(film.dataset.slug) < 2) setStage(film.dataset.slug, 2);
     syncFilm(film, /[?&]spoil=1/.test(location.search));
+    if (stageOf(film.dataset.slug) > 0) suggestNext(film);
     film.addEventListener('click', function (ev) {
       var g = ev.target.closest('.guess-btn');
       var r = ev.target.closest('[data-reveal]');
@@ -254,15 +307,20 @@
         var actual = film.dataset.verdict;
         var right = actual === g.dataset.guess;
         var msg;
-        if (actual === 'ambiguous') { msg = 'Trick question. This one is complicated. No points either way.'; }
-        else if (right) { state.guesses.right++; state.guesses.streak++; state.guesses.best = Math.max(state.guesses.best, state.guesses.streak); msg = 'You called it.'; }
-        else { state.guesses.wrong++; state.guesses.streak = 0; msg = 'Not this time.'; }
+        if (state.guessed[slug]) { msg = 'You already guessed this one. It only counts once.'; }
+        else if (actual === 'ambiguous') { msg = 'Trick question. This one is complicated. No points either way.'; state.guessed[slug] = 'na'; }
+        else if (right) { state.guesses.right++; state.guesses.streak++; state.guesses.best = Math.max(state.guesses.best, state.guesses.streak); msg = 'You called it.'; state.guessed[slug] = 'right'; }
+        else { state.guesses.wrong++; state.guesses.streak = 0; msg = 'Not this time.'; state.guessed[slug] = 'wrong'; }
         setStage(slug, 1);
         syncFilm(film, true);
         film.querySelector('[data-guess-result]').textContent = msg;
+        suggestNext(film);
       } else if (r) {
         setStage(slug, 1);
         syncFilm(film, true);
+        suggestNext(film);
+      } else if (ev.target.closest('[data-hint-btn]')) {
+        showHint(film);
       } else if (sp) {
         var next = +sp.dataset.spoil;
         setStage(slug, next);

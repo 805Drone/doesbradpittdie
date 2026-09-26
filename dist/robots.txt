@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /backroom/
 Sitemap: https://doesbradpittdie.com/sitemap.xml

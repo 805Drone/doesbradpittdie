@@ -43,6 +43,9 @@ def load_films() -> list[dict]:
         f["prev"] = films[i - 1] if i > 0 else None
         f["next"] = films[i + 1] if i < len(films) - 1 else None
         f["poster"] = f"posters/{f['slug']}.webp" if (DATA / "posters" / f"{f['slug']}.webp").exists() else None
+        bd = DATA / "backdrops" / f"{f['slug']}.webp"
+        f["backdrop"] = f"backdrops/{f['slug']}.webp" if bd.exists() else None
+        f["lqip"] = f"backdrops/{f['slug']}.lqip.webp" if bd.exists() else None
     return films
 
 
@@ -77,9 +80,10 @@ def split_verdict(f: dict) -> tuple[str, str]:
 
 
 # ---------------------------------------------------------------- layout
-def head(title: str, desc: str, path: str, extra: str = "", depth: int = 0) -> str:
+def head(title: str, desc: str, path: str, extra: str = "", depth: int = 0, noindex: bool = False) -> str:
     base = "../" * depth
     url = SITE + path
+    robots = '<meta name="robots" content="noindex,nofollow">\n' if noindex else ""
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -87,6 +91,7 @@ def head(title: str, desc: str, path: str, extra: str = "", depth: int = 0) -> s
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
+{robots}<meta name="view-transition" content="same-origin">
 <link rel="canonical" href="{url}">
 <meta property="og:site_name" content="{SITE_NAME}">
 <meta property="og:title" content="{e(title)}">
@@ -183,7 +188,17 @@ def build_index(films: list[dict]) -> str:
     decades: dict[int, list[dict]] = {}
     for f in films:
         decades.setdefault(f["year"] // 10 * 10, []).append(f)
-    titles_json = json.dumps([f["title"] for f in films if f["role_size"] in ("lead", "supporting") and len(f["title"]) <= 22 and not f.get("unreleased")])
+    rotor_items = [
+        {"t": f["title"], "b": f["poster"]}
+        for f in films
+        if f["role_size"] in ("lead", "supporting") and len(f["title"]) <= 22 and not f.get("unreleased")
+    ]
+    titles_json = json.dumps(rotor_items)
+    first_bd = next((r["b"] for r in rotor_items if r["b"]), None)
+    hero_bd = (
+        f'<div class="hero-bd" aria-hidden="true"><img class="hero-bd-img is-on" src="{first_bd}" alt="" width="600" height="900" fetchpriority="high"><img class="hero-bd-img" alt="" width="600" height="900"></div>'
+        if first_bd else ""
+    )
 
     sections = []
     for dec, fs in sorted(decades.items()):
@@ -200,7 +215,8 @@ def build_index(films: list[dict]) -> str:
         f"Every Brad Pitt movie and TV appearance, {films[0]['year']} to {films[-1]['year']}, with the one "
         "answer that matters kept sealed until you choose to reveal it."
     )
-    body = f"""<section class="hero">
+    body = f"""<section class="hero{' has-bd' if hero_bd else ''}">
+  {hero_bd}
   <p class="hero-kicker">A spoiler-sealed reference to {len(films)} films and shows</p>
   <h1 class="hero-q">Does Brad Pitt die in <span class="rotor" data-titles='{e(titles_json)}'><span class="rotor-word">Fury</span></span><span class="q-mark">?</span></h1>
   <p class="hero-sub">Find the title. Decide if you want to know. Reveal the moment on your own terms.</p>
@@ -301,6 +317,7 @@ def build_film(f: dict) -> str:
           <button type="button" class="guess-btn" data-guess="dies">He dies</button>
         </div>
         <button type="button" class="reveal-big" data-reveal="{f['slug']}">Just reveal it</button>
+        {'<button type="button" class="hint-btn" data-hint-btn><span class="hint-eye" aria-hidden="true"></span>Give me a hint</button>' if f.get('backdrop') else ''}
         <p class="seal-fine">Revealing shows only the answer. Everything else stays behind its own curtain.</p>
       </div>"""
     if f.get("unreleased"):
@@ -309,7 +326,20 @@ def build_film(f: dict) -> str:
         <p class="verdict-how">{e(f['how'])}</p>
         <p class="seal-fine">{e(f['unreleased'])}</p>
       </div>"""
-    body = f"""<article class="film{' is-unreleased' if f.get('unreleased') else ''}" data-slug="{f['slug']}" data-verdict="{vk}">
+    film_bd = (
+        f'<div class="film-bd is-loaded" aria-hidden="true"><img class="film-bd-img" src="{base}{f["poster"]}" alt="" width="600" height="900" decoding="async"></div>'
+        if f.get("poster") else ""
+    )
+    hint = (
+        f'<div class="hint" data-hint hidden><div class="hint-bar hint-bar-t"></div><div class="hint-bar hint-bar-b"></div>'
+        f'<img class="hint-img" src="{base}{f["backdrop"]}" alt="A frame from {e(f["title"])}" width="1280" height="720" loading="lazy" decoding="async">'
+        f'<p class="hint-cap">A frame from the film. That is all you get.</p></div>'
+        if f.get("backdrop") else ""
+    )
+    next_pool = json.dumps([{"s": x["slug"], "t": x["title"], "y": x["year"]} for x in ALL_FILMS if not x.get("unreleased") and x["slug"] != f["slug"]])
+    body = f"""<article class="film{' is-unreleased' if f.get('unreleased') else ''}{' has-bd' if film_bd else ''}" data-slug="{f['slug']}" data-verdict="{vk}" data-pool='{e(next_pool)}'>
+  {film_bd}
+  {hint}
   <div class="film-hero">
     <div class="film-poster">{poster_html(f, base, sizes="(max-width: 700px) 60vw, 320px", eager=True)}</div>
     <div class="film-head">
@@ -332,6 +362,7 @@ def build_film(f: dict) -> str:
             <button type="button" class="spoil-btn" data-spoil="2"><span class="spoil-shine" aria-hidden="true"></span>Spoil the moment</button>
             <p class="gate-fine">How it happens, in words. No pictures yet.</p>
           </div>
+          <p class="next-up" data-next hidden></p>
         </section>
 
         <section class="stage stage-2" data-stage="2" hidden>
@@ -517,8 +548,12 @@ def write(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8", newline="\n")
 
 
+ALL_FILMS: list[dict] = []
+
+
 def main() -> None:
     films = load_films()
+    ALL_FILMS.extend(films)
     if DIST.exists():
         shutil.rmtree(DIST)
     DIST.mkdir()
@@ -538,6 +573,27 @@ def main() -> None:
     write(DIST / "stats" / "index.html", build_stats(films))
     write(DIST / "about" / "index.html", build_about(films))
     write(DIST / "404.html", build_404())
+    # the back room: unlisted notes with comments
+    import blog
+
+    posts = blog.load_posts()
+    write(
+        DIST / "backroom" / "index.html",
+        head("The back room", "Unlisted notes on the project.", "/backroom/", depth=1, noindex=True)
+        + header(1) + blog.index_html(posts, SITE) + footer(1),
+    )
+    for p in posts:
+        write(
+            DIST / "backroom" / p["slug"] / "index.html",
+            head(p["title"], p["summary"] or "A note from the back room.", f"/backroom/{p['slug']}/", depth=2, noindex=True)
+            + header(2) + blog.post_html(p, SITE) + footer(2),
+        )
+    shutil.copy(SRC / "static" / "giscus.css", DIST / "assets" / "giscus.css")
+    backdrops = DATA / "backdrops"
+    if backdrops.exists():
+        (DIST / "backdrops").mkdir(exist_ok=True)
+        for p in backdrops.glob("*.webp"):
+            shutil.copy(p, DIST / "backdrops" / p.name)
     urls = ["/", "/stats/", "/about/"] + [f"/film/{f['slug']}/" for f in films]
     write(
         DIST / "sitemap.xml",
@@ -545,7 +601,7 @@ def main() -> None:
         + "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{BUILD_DATE}</lastmod></url>\n" for u in urls)
         + "</urlset>\n",
     )
-    write(DIST / "robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
+    write(DIST / "robots.txt", f"User-agent: *\nAllow: /\nDisallow: /backroom/\nSitemap: {SITE}/sitemap.xml\n")
     write(DIST / "CNAME", "doesbradpittdie.com\n")
     write(DIST / ".nojekyll", "")
     write(DIST / "films.json", json.dumps([{k: v for k, v in f.items() if k not in ("prev", "next")} for f in films], indent=1))
