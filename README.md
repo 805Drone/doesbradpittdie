@@ -42,6 +42,12 @@ in robots.txt. Comments are giscus, backed by GitHub Discussions (category Gener
 repo. Requirement: the giscus GitHub app must be installed on the repo
 (https://github.com/apps/giscus/installations/new).
 
+## Design context
+
+`PRODUCT.md` (who it is for, voice, anti-references) and `DESIGN.md` (tokens, type, components)
+drive the look. The lane is a dark cinema archive: navy-black ground, one ember accent, Barlow
+Condensed display. Restyle work should start from those two files.
+
 ## Layout
 
 - `src/build.py` static generator (Python 3.12, Pillow only)
