@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Play: Does Brad Pitt Die? The game</title>
+<meta name="description" content="A daily challenge, a full career run and quick rounds. Call whether Brad Pitt makes it, against the clock.">
+<meta name="view-transition" content="same-origin">
+<link rel="canonical" href="https://doesbradpittdie.com/play/">
+<meta property="og:site_name" content="Does Brad Pitt Die?">
+<meta property="og:title" content="Play: Does Brad Pitt Die? The game">
+<meta property="og:description" content="A daily challenge, a full career run and quick rounds. Call whether Brad Pitt makes it, against the clock.">
+<meta property="og:url" content="https://doesbradpittdie.com/play/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://doesbradpittdie.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0c1015">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=012cabaf">
+
+</head>
+<body data-base="../">
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="top">
+  <a class="wordmark" href="../" aria-label="Does Brad Pitt Die? home"><span class="wm-mark" aria-hidden="true">?</span>Does Brad Pitt <span class="wm-q">die?</span></a>
+  <nav class="topnav" aria-label="Primary">
+    <a href="../play/" class="nav-play">Play</a>
+    <a href="../#films">The archive</a>
+    <a href="../stats/">The ledger</a>
+    <a href="../about/">About</a>
+    <span class="nav-note" aria-hidden="true">Guess first. Reveal later.</span>
+    <button class="seal-toggle" type="button" data-seal-toggle aria-pressed="false">
+      <span class="when-sealed">Reveal all</span><span class="when-revealed">Seal all</span>
+    </button>
+  </nav>
+</header>
+<nav class="tabbar" aria-label="Quick actions">
+  <a href="../#films"><span class="tb-ico" aria-hidden="true">▦</span>Archive</a>
+  <a href="../stats/"><span class="tb-ico" aria-hidden="true">▤</span>Ledger</a>
+  <a href="../play/"><span class="tb-ico" aria-hidden="true">▶</span>Play</a>
+  <button type="button" data-seal-toggle aria-pressed="false"><span class="tb-ico" aria-hidden="true">◈</span><span class="when-sealed">Reveal all</span><span class="when-revealed">Seal all</span></button>
+</nav>
+<main id="main">
+<section class="play" data-play>
+  <div class="play-intro" id="intro">
+    <p class="page-kicker">The game</p>
+    <h1 class="page-h">Call the <em>ending</em></h1>
+    <p class="page-sub">Does he make it or not? Points for every right call, bonus for speed and for streaks. The clock runs only while a question is open.</p>
+
+    <div class="modes">
+      <article class="mode mode-daily">
+        <p class="mode-kicker">Daily challenge <span data-today></span></p>
+        <h2 class="mode-h">Ten titles. The same ten for everyone today.</h2>
+        <p class="mode-line" data-daily-status>Mixed questions: endings and characters.</p>
+        <div class="mode-cta"><button type="button" class="btn-primary" data-start="daily">Play today's ten</button><button type="button" class="btn-ghost" data-share-daily hidden>Share today</button></div>
+      </article>
+      <article class="mode">
+        <p class="mode-kicker">Beginning to end</p>
+        <h2 class="mode-h">All 82 titles, 1987 to now, in order.</h2>
+        <p class="mode-line" data-career-status>Leave whenever you like. Your run is saved where you stopped.</p>
+        <div class="mode-cta"><button type="button" class="btn-primary" data-start="career">Start the career run</button><button type="button" class="btn-ghost" data-continue hidden>Continue</button></div>
+      </article>
+      <article class="mode">
+        <p class="mode-kicker">Quick ten</p>
+        <h2 class="mode-h">Ten random titles. As often as you like.</h2>
+        <p class="mode-line" data-quick-status>Good for practice before the daily.</p>
+        <div class="mode-cta"><button type="button" class="btn-primary" data-start="quick">Deal ten</button></div>
+      </article>
+    </div>
+
+    <h2 class="archive-h play-sh">Your record</h2>
+    <div class="bignums play-stats" data-stats></div>
+    <div class="reset-row">
+      <button type="button" class="reseal" data-reset>Reset scores</button>
+      <div class="reset-confirm" data-reset-confirm hidden>
+        <span>This clears every score, time, streak and your saved run.</span>
+        <button type="button" class="btn-primary" data-reset-yes>Clear everything</button>
+        <button type="button" class="btn-ghost" data-reset-no>Keep them</button>
+      </div>
+    </div>
+    <p class="seal-fine">Heads up: the game shows answers as you play. Scores live on this device only.</p>
+  </div>
+
+  <div class="play-game" id="game" hidden>
+    <div class="hud">
+      <span class="hud-mode" data-mode-label></span>
+      <span class="hud-cell"><small>Question</small><b data-q>1 / 10</b></span>
+      <span class="hud-cell"><small>Score</small><b data-score>0</b></span>
+      <span class="hud-cell"><small>Time</small><b data-time>0:00.0</b></span>
+      <button type="button" class="reseal hud-quit" data-quit>Quit</button>
+    </div>
+    <div class="progress" aria-hidden="true"><i data-progress></i></div>
+    <div class="q-card">
+      <div class="q-poster" data-poster-box></div>
+      <div class="q-body">
+        <p class="q-meta" data-meta></p>
+        <h2 class="q-title" data-title></h2>
+        <p class="q-prompt" data-prompt></p>
+        <div class="q-opts" data-opts role="group"></div>
+        <div class="q-feedback" data-feedback hidden aria-live="polite">
+          <p class="fb-call" data-fb-call></p>
+          <p class="fb-text" data-fb-text></p>
+          <button type="button" class="btn-primary" data-next>Next</button>
+        </div>
+        <p class="combo" data-combo aria-live="polite"></p>
+        <p class="seal-fine q-keys">Keys: 1, 2, 3 or 4 to answer. Enter for next.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="play-result" id="result" hidden>
+    <p class="page-kicker" data-r-kicker></p>
+    <h2 class="page-h" data-r-title></h2>
+    <div class="bignums">
+      <div class="bignum"><span class="bn-n" data-r-score></span><span class="bn-l">points</span></div>
+      <div class="bignum"><span class="bn-n" data-r-correct></span><span class="bn-l">right calls</span></div>
+      <div class="bignum"><span class="bn-n" data-r-time></span><span class="bn-l">on the clock</span></div>
+      <div class="bignum"><span class="bn-n" data-r-combo></span><span class="bn-l">best streak</span></div>
+    </div>
+    <p class="r-best" data-r-best></p>
+    <p class="r-grid" data-r-grid aria-label="Your answers"></p>
+    <div class="slide-cta">
+      <button type="button" class="btn-primary" data-share>Share result</button>
+      <button type="button" class="btn-ghost" data-again>Play again</button>
+      <button type="button" class="btn-ghost" data-menu>All modes</button>
+    </div>
+    <p class="seal-fine" data-share-msg aria-live="polite"></p>
+  </div>
+</section>
+<script type="application/json" id="quiz-data">[{"s": "another-world", "t": "Another World", "y": 1987, "ty": "tv", "p": null, "c": "Chris", "r": "cameo", "v": "survives", "vs": "No. A high-school basketball kid in two soap episodes."}, {"s": "dallas", "t": "Dallas", "y": 1987, "ty": "tv", "p": "../posters/dallas.webp", "c": "Randy", "r": "supporting", "v": "survives", "vs": "No. Charlie Wade's boyfriend gets banned, then un-banned."}, {"s": "growing-pains", "t": "Growing Pains", "y": 1987, "ty": "tv", "p": null, "c": "Jeff / Jonathan Keith", "r": "supporting", "v": "survives", "vs": "No. Sitcom heartthrob, twice over, never in danger."}, {"s": "21-jump-street", "t": "21 Jump Street", "y": 1988, "ty": "tv", "p": "../posters/21-jump-street.webp", "c": "Peter", "r": "supporting", "v": "survives", "vs": "No. He's the friend who yells at Penhall, not the kid who dies."}, {"s": "a-stoning-in-fulham-county", "t": "A Stoning in Fulham County", "y": 1988, "ty": "tv", "p": null, "c": "Teddy Johnson", "r": "supporting", "v": "survives", "vs": "No. He changes his plea to guilty and gets a suspended sentence."}, {"s": "the-dark-side-of-the-sun", "t": "The Dark Side of the Sun", "y": 1988, "ty": "film", "p": "../posters/the-dark-side-of-the-sun.webp", "c": "Rick Clayton", "r": "lead", "v": "dies", "vs": "Yes. He takes off the mask, feels the sun, and lets the disease win."}, {"s": "trial-and-error", "t": "Trial and Error", "y": 1988, "ty": "tv", "p": "../posters/trial-and-error.webp", "c": "Bellboy", "r": "cameo", "v": "survives", "vs": "No. He carries bags in a sitcom and leaves."}, {"s": "cutting-class", "t": "Cutting Class", "y": 1989, "ty": "film", "p": "../posters/cutting-class.webp", "c": "Dwight Ingalls", "r": "lead", "v": "survives", "vs": "No. Framed for the murders, he survives the drill-in-a-vice finale."}, {"s": "freddys-nightmares", "t": "Freddy's Nightmares", "y": 1989, "ty": "tv", "p": null, "c": "Rick Austin", "r": "lead", "v": "survives", "vs": "No. Freddy leaves him alive but trapped in adulthood."}, {"s": "happy-together", "t": "Happy Together", "y": 1989, "ty": "film", "p": "../posters/happy-together.webp", "c": "Brian", "r": "supporting", "v": "survives", "vs": "No. Minor college pal in a rom-com."}, {"s": "head-of-the-class", "t": "Head of the Class", "y": 1989, "ty": "tv", "p": "../posters/head-of-the-class.webp", "c": "Chuck", "r": "supporting", "v": "survives", "vs": "No. Dim hunk survives a sitcom episode."}, {"s": "thirtysomething", "t": "thirtysomething", "y": 1989, "ty": "tv", "p": "../posters/thirtysomething.webp", "c": "Bernard", "r": "cameo", "v": "survives", "vs": "No. The babysitter's boyfriend, alive and glowing."}, {"s": "glory-days", "t": "Glory Days", "y": 1990, "ty": "tv", "p": null, "c": "Walker Lovejoy", "r": "lead", "v": "survives", "vs": "No. Cancelled after six episodes, alive."}, {"s": "the-image", "t": "The Image", "y": 1990, "ty": "tv", "p": null, "c": "Steve Black", "r": "supporting", "v": "survives", "vs": "No. Junior newsroom staffer, untouched."}, {"s": "too-young-to-die", "t": "Too Young to Die?", "y": 1990, "ty": "tv", "p": "../posters/too-young-to-die.webp", "c": "Billy Canton", "r": "lead", "v": "survives", "vs": "No. The sleazy hustler lives; the girl he corrupted gets the gas chamber."}, {"s": "across-the-tracks", "t": "Across the Tracks", "y": 1991, "ty": "film", "p": "../posters/across-the-tracks.webp", "c": "Joe Maloney", "r": "lead", "v": "survives", "vs": "No. Runs the big race and keeps breathing."}, {"s": "johnny-suede", "t": "Johnny Suede", "y": 1991, "ty": "film", "p": "../posters/johnny-suede.webp", "c": "Johnny Suede", "r": "lead", "v": "survives", "vs": "No. Learns life is more than a pair of suede shoes."}, {"s": "thelma-and-louise", "t": "Thelma & Louise", "y": 1991, "ty": "film", "p": "../posters/thelma-and-louise.webp", "c": "J.D.", "r": "supporting", "v": "survives", "vs": "No. Steals the cash and walks; the women drive off the cliff."}, {"s": "a-river-runs-through-it", "t": "A River Runs Through It", "y": 1992, "ty": "film", "p": "../posters/a-river-runs-through-it.webp", "c": "Paul Maclean", "r": "lead", "v": "dies", "vs": "Yes. Beaten to death over gambling debts, off-screen."}, {"s": "contact", "t": "Contact", "y": 1992, "ty": "film", "p": null, "c": "Cox", "r": "lead", "v": "survives", "vs": "No. Buries a dead Iraqi soldier and parts ways with the other."}, {"s": "cool-world", "t": "Cool World", "y": 1992, "ty": "film", "p": "../posters/cool-world.webp", "c": "Frank Harris", "r": "lead", "v": "dies", "vs": "Yes. Holli shoves him off a Vegas hotel roof. Then he's reborn as a cartoon."}, {"s": "tales-from-the-crypt", "t": "Tales from the Crypt", "y": 1992, "ty": "tv", "p": null, "c": "Billy Drake", "r": "lead", "v": "dies", "vs": "Yes. Loses the drag race to the Iceman and goes up in a fireball."}, {"s": "kalifornia", "t": "Kalifornia", "y": 1993, "ty": "film", "p": "../posters/kalifornia.webp", "c": "Early Grayce", "r": "lead", "v": "dies", "vs": "Yes. Shot dead by the writer he terrorized."}, {"s": "true-romance", "t": "True Romance", "y": 1993, "ty": "film", "p": "../posters/true-romance.webp", "c": "Floyd", "r": "cameo", "v": "survives", "vs": "No. Never leaves the couch or the honey-bear bong."}, {"s": "interview-with-the-vampire", "t": "Interview with the Vampire", "y": 1994, "ty": "film", "p": "../posters/interview-with-the-vampire.webp", "c": "Louis de Pointe du Lac", "r": "lead", "v": "survives", "vs": "No. He's been undead since 1791 and still is."}, {"s": "legends-of-the-fall", "t": "Legends of the Fall", "y": 1994, "ty": "film", "p": "../posters/legends-of-the-fall.webp", "c": "Tristan Ludlow", "r": "lead", "v": "dies", "vs": "Yes. Killed fighting a grizzly bear as an old man in 1963."}, {"s": "the-favor", "t": "The Favor", "y": 1994, "ty": "film", "p": "../posters/the-favor.webp", "c": "Elliott Fowler", "r": "supporting", "v": "survives", "vs": "No. Ends up planning a wedding."}, {"s": "12-monkeys", "t": "12 Monkeys", "y": 1995, "ty": "film", "p": "../posters/12-monkeys.webp", "c": "Jeffrey Goines", "r": "supporting", "v": "survives", "vs": "No. The twitchy red herring survives; the plague isn't even his."}, {"s": "seven", "t": "Seven", "y": 1995, "ty": "film", "p": "../posters/seven.webp", "c": "Detective David Mills", "r": "lead", "v": "survives", "vs": "No. He lives, but what's in the box destroys him anyway."}, {"s": "sleepers", "t": "Sleepers", "y": 1996, "ty": "film", "p": "../posters/sleepers.webp", "c": "Michael Sullivan", "r": "lead", "v": "survives", "vs": "No. Throws the case, quits, and becomes a carpenter in England."}, {"s": "seven-years-in-tibet", "t": "Seven Years in Tibet", "y": 1997, "ty": "film", "p": "../posters/seven-years-in-tibet.webp", "c": "Heinrich Harrer", "r": "lead", "v": "survives", "vs": "No. Goes home to Austria and takes his son climbing."}, {"s": "the-devils-own", "t": "The Devil's Own", "y": 1997, "ty": "film", "p": "../posters/the-devils-own.webp", "c": "Frankie McGuire / Rory Devaney", "r": "lead", "v": "dies", "vs": "Yes. Shot in a final boat standoff with the cop who took him in."}, {"s": "meet-joe-black", "t": "Meet Joe Black", "y": 1998, "ty": "film", "p": "../posters/meet-joe-black.webp", "c": "Joe Black / the young man in the coffee shop", "r": "lead", "v": "ambiguous", "vs": "Yes and no. The coffee-shop guy is flattened by two cars; Death borrows his body, then gives it back alive."}, {"s": "saturday-night-live-1998", "t": "Saturday Night Live", "y": 1998, "ty": "tv", "p": "../posters/saturday-night-live-1998.webp", "c": "David Spade's therapist", "r": "cameo", "v": "survives", "vs": "No. Plays David Spade's shrink in the cold open."}, {"s": "being-john-malkovich", "t": "Being John Malkovich", "y": 1999, "ty": "film", "p": "../posters/being-john-malkovich.webp", "c": "Himself", "r": "cameo", "v": "survives", "vs": "No. On screen for about half a second, mid-frown."}, {"s": "fight-club", "t": "Fight Club", "y": 1999, "ty": "film", "p": "../posters/fight-club.webp", "c": "Tyler Durden", "r": "lead", "v": "ambiguous", "vs": "Sort of. The Narrator shoots himself through the cheek and Tyler blinks out of existence. But Tyler was never real."}, {"s": "snatch", "t": "Snatch", "y": 2000, "ty": "film", "p": "../posters/snatch.webp", "c": "Mickey O'Neil", "r": "lead", "v": "survives", "vs": "No. Fakes taking a dive, wins the fight, and his camp settles up with Brick Top."}, {"s": "friends", "t": "Friends", "y": 2001, "ty": "tv", "p": null, "c": "Will Colbert", "r": "supporting", "v": "survives", "vs": "No. Storms out of Thanksgiving still hating Rachel Green."}, {"s": "oceans-eleven", "t": "Ocean's Eleven", "y": 2001, "ty": "film", "p": "../posters/oceans-eleven.webp", "c": "Rusty Ryan", "r": "lead", "v": "survives", "vs": "No. Eats his way through a $160M heist and drives off with Danny."}, {"s": "spy-game", "t": "Spy Game", "y": 2001, "ty": "film", "p": "../posters/spy-game.webp", "c": "Tom Bishop", "r": "lead", "v": "survives", "vs": "No. Muir buys him out of a Chinese prison with Operation Dinner Out."}, {"s": "the-mexican", "t": "The Mexican", "y": 2001, "ty": "film", "p": "../posters/the-mexican.webp", "c": "Jerry Welbach", "r": "lead", "v": "survives", "vs": "No. Delivers the cursed pistol, keeps the girl, drives into the sunset."}, {"s": "confessions-of-a-dangerous-mind", "t": "Confessions of a Dangerous Mind", "y": 2002, "ty": "film", "p": "../posters/confessions-of-a-dangerous-mind.webp", "c": "Bachelor Brad", "r": "cameo", "v": "survives", "vs": "No. He just loses on The Dating Game."}, {"s": "full-frontal", "t": "Full Frontal", "y": 2002, "ty": "film", "p": "../posters/full-frontal.webp", "c": "Himself", "r": "cameo", "v": "survives", "vs": "No. Just Brad Pitt being Brad Pitt on a film set."}, {"s": "jackass", "t": "Jackass", "y": 2002, "ty": "tv", "p": null, "c": "Himself", "r": "cameo", "v": "survives", "vs": "No. Kidnapped at Pink's Hot Dogs, but it's a prank."}, {"s": "king-of-the-hill", "t": "King of the Hill", "y": 2003, "ty": "tv", "p": null, "c": "Patch Boomhauer", "r": "voice", "v": "survives", "vs": "No. Dumped at the altar for being a sleaze."}, {"s": "sinbad-legend-of-the-seven-seas", "t": "Sinbad: Legend of the Seven Seas", "y": 2003, "ty": "film", "p": "../posters/sinbad-legend-of-the-seven-seas.webp", "c": "Sinbad", "r": "voice", "v": "survives", "vs": "No. The executioner's sword shatters mid-swing."}, {"s": "oceans-twelve", "t": "Ocean's Twelve", "y": 2004, "ty": "film", "p": "../posters/oceans-twelve.webp", "c": "Rusty Ryan", "r": "lead", "v": "survives", "vs": "No. Out-cons the Night Fox and gets the girl."}, {"s": "troy", "t": "Troy", "y": 2004, "ty": "film", "p": "../posters/troy.webp", "c": "Achilles", "r": "lead", "v": "dies", "vs": "Yes. Paris's arrow finds the famous heel."}, {"s": "mr-and-mrs-smith", "t": "Mr. & Mrs. Smith", "y": 2005, "ty": "film", "p": "../posters/mr-and-mrs-smith.webp", "c": "John Smith", "r": "lead", "v": "survives", "vs": "No. Survives his wife and a store full of assassins."}, {"s": "babel", "t": "Babel", "y": 2006, "ty": "film", "p": "../posters/babel.webp", "c": "Richard Jones", "r": "lead", "v": "survives", "vs": "No. His wife takes the bullet, and she lives too."}, {"s": "oceans-thirteen", "t": "Ocean's Thirteen", "y": 2007, "ty": "film", "p": "../posters/oceans-thirteen.webp", "c": "Rusty Ryan", "r": "lead", "v": "survives", "vs": "No. Walks off grinning after a rigged $11 million slot win."}, {"s": "the-assassination-of-jesse-james-by-the-coward-robert-ford", "t": "The Assassination of Jesse James by the Coward Robert Ford", "y": 2007, "ty": "film", "p": "../posters/the-assassination-of-jesse-james-by-the-coward-robert-ford.webp", "c": "Jesse James", "r": "lead", "v": "dies", "vs": "Yes. Shot in the back of the head by Robert Ford."}, {"s": "burn-after-reading", "t": "Burn After Reading", "y": 2008, "ty": "film", "p": "../posters/burn-after-reading.webp", "c": "Chad Feldheimer", "r": "supporting", "v": "dies", "vs": "Yes. Shot in the face in a closet by Harry Pfarrer."}, {"s": "the-curious-case-of-benjamin-button", "t": "The Curious Case of Benjamin Button", "y": 2008, "ty": "film", "p": "../posters/the-curious-case-of-benjamin-button.webp", "c": "Benjamin Button", "r": "lead", "v": "dies", "vs": "Yes. Dies of old age as a newborn in Daisy's arms."}, {"s": "inglourious-basterds", "t": "Inglourious Basterds", "y": 2009, "ty": "film", "p": "../posters/inglourious-basterds.webp", "c": "Lt. Aldo Raine", "r": "lead", "v": "survives", "vs": "No. Carves his masterpiece into Landa's forehead."}, {"s": "megamind", "t": "Megamind", "y": 2010, "ty": "film", "p": "../posters/megamind.webp", "c": "Metro Man", "r": "voice", "v": "survives", "vs": "No. Fakes his death to become Music Man."}, {"s": "happy-feet-two", "t": "Happy Feet Two", "y": 2011, "ty": "film", "p": "../posters/happy-feet-two.webp", "c": "Will the Krill", "r": "voice", "v": "survives", "vs": "No. A krill who refuses to be eaten and becomes a legend."}, {"s": "moneyball", "t": "Moneyball", "y": 2011, "ty": "film", "p": "../posters/moneyball.webp", "c": "Billy Beane", "r": "lead", "v": "survives", "vs": "No. Turns down $12.5 million and stays in Oakland."}, {"s": "the-tree-of-life", "t": "The Tree of Life", "y": 2011, "ty": "film", "p": "../posters/the-tree-of-life.webp", "c": "Mr. O'Brien", "r": "lead", "v": "survives", "vs": "No. It's his son who dies; he outlives the boy."}, {"s": "killing-them-softly", "t": "Killing Them Softly", "y": 2012, "ty": "film", "p": "../posters/killing-them-softly.webp", "c": "Jackie Cogan", "r": "lead", "v": "survives", "vs": "No. America's not a country, it's a business. Now pay him."}, {"s": "12-years-a-slave", "t": "12 Years a Slave", "y": 2013, "ty": "film", "p": "../posters/12-years-a-slave.webp", "c": "Samuel Bass", "r": "supporting", "v": "survives", "vs": "No. The Canadian carpenter who mails the letter that frees Solomon."}, {"s": "the-counselor", "t": "The Counselor", "y": 2013, "ty": "film", "p": "../posters/the-counselor.webp", "c": "Westray", "r": "supporting", "v": "dies", "vs": "Yes. Decapitated on a London street by the bolito."}, {"s": "world-war-z", "t": "World War Z", "y": 2013, "ty": "film", "p": "../posters/world-war-z.webp", "c": "Gerry Lane", "r": "lead", "v": "survives", "vs": "No. Injects himself with a deadly pathogen and walks right past the zombies."}, {"s": "fury", "t": "Fury", "y": 2014, "ty": "film", "p": "../posters/fury.webp", "c": "Staff Sgt. Don \"Wardaddy\" Collier", "r": "lead", "v": "dies", "vs": "Yes. Goes down with his tank, shredded by grenades in a last stand."}, {"s": "by-the-sea", "t": "By the Sea", "y": 2015, "ty": "film", "p": "../posters/by-the-sea.webp", "c": "Roland Bertrand", "r": "lead", "v": "survives", "vs": "No. Finishes his novel and drives off with his wife."}, {"s": "the-audition", "t": "The Audition", "y": 2015, "ty": "film", "p": "../posters/the-audition.webp", "c": "Himself", "r": "cameo", "v": "survives", "vs": "No. He just steals the part from De Niro and DiCaprio."}, {"s": "the-big-short", "t": "The Big Short", "y": 2015, "ty": "film", "p": "../posters/the-big-short.webp", "c": "Ben Rickert", "r": "supporting", "v": "survives", "vs": "No. Cashes out and goes back to growing seeds in retirement."}, {"s": "allied", "t": "Allied", "y": 2016, "ty": "film", "p": "../posters/allied.webp", "c": "Wing Commander Max Vatan", "r": "lead", "v": "survives", "vs": "No. He lives; his wife shoots herself on the runway."}, {"s": "the-jim-jefferies-show", "t": "The Jim Jefferies Show", "y": 2017, "ty": "tv", "p": "../posters/the-jim-jefferies-show.webp", "c": "Weatherman", "r": "cameo", "v": "survives", "vs": "No. He just forecasts the end of the world."}, {"s": "war-machine", "t": "War Machine", "y": 2017, "ty": "film", "p": "../posters/war-machine.webp", "c": "Gen. Glen McMahon", "r": "lead", "v": "survives", "vs": "No. Fired by the President after a Rolling Stone exposé."}, {"s": "deadpool-2", "t": "Deadpool 2", "y": 2018, "ty": "film", "p": "../posters/deadpool-2.webp", "c": "Vanisher", "r": "cameo", "v": "dies", "vs": "Yes. Electrocuted on power lines, visible for about one second."}, {"s": "ad-astra", "t": "Ad Astra", "y": 2019, "ty": "film", "p": "../posters/ad-astra.webp", "c": "Maj. Roy McBride", "r": "lead", "v": "survives", "vs": "No. Nukes his dad's space station and rides the shockwave home to Earth."}, {"s": "once-upon-a-time-in-hollywood", "t": "Once Upon a Time in Hollywood", "y": 2019, "ty": "film", "p": "../posters/once-upon-a-time-in-hollywood.webp", "c": "Cliff Booth", "r": "lead", "v": "survives", "vs": "No. Stabbed in the hip, but he beats the Manson Family to death and rides off in an ambulance."}, {"s": "saturday-night-live-2020", "t": "Saturday Night Live", "y": 2020, "ty": "tv", "p": null, "c": "Dr. Anthony Fauci", "r": "cameo", "v": "survives", "vs": "No. Takes off the wig and thanks the real Fauci."}, {"s": "babylon", "t": "Babylon", "y": 2022, "ty": "film", "p": "../posters/babylon.webp", "c": "Jack Conrad", "r": "lead", "v": "dies", "vs": "Yes. Shoots himself in a hotel room once the talkies leave him behind."}, {"s": "bullet-train", "t": "Bullet Train", "y": 2022, "ty": "film", "p": "../posters/bullet-train.webp", "c": "Ladybug", "r": "lead", "v": "survives", "vs": "No. Everyone else dies; his bad luck keeps him alive."}, {"s": "the-lost-city", "t": "The Lost City", "y": 2022, "ty": "film", "p": "../posters/the-lost-city.webp", "c": "Jack Trainer", "r": "cameo", "v": "survives", "vs": "No. But he's shot in the head and looks very dead until the mid-credits scene."}, {"s": "dave", "t": "Dave", "y": 2023, "ty": "tv", "p": null, "c": "Himself, sort of", "r": "cameo", "v": "survives", "vs": "No. Takes a crossbow bolt to the chest but gives a thumbs-up to the paramedics."}, {"s": "if", "t": "IF", "y": 2024, "ty": "film", "p": "../posters/if.webp", "c": "Keith", "r": "voice", "v": "survives", "vs": "No. He's an invisible imaginary friend; you never see or hear him."}, {"s": "wolfs", "t": "Wolfs", "y": 2024, "ty": "film", "p": "../posters/wolfs.webp", "c": "The other fixer", "r": "lead", "v": "survives", "vs": "No. Cuts to black as the diner shootout starts."}, {"s": "f1", "t": "F1", "y": 2025, "ty": "film", "p": "../posters/f1.webp", "c": "Sonny Hayes", "r": "lead", "v": "survives", "vs": "No. Wins Abu Dhabi and drives off to the next race."}, {"s": "heart-of-the-beast", "t": "Heart of the Beast", "y": 2026, "ty": "film", "p": "../posters/heart-of-the-beast.webp", "c": "James Belmont", "r": "lead", "v": "dies", "vs": "Yes. His failing heart gives out in the Alaskan wilderness; only the dog makes it to the road."}]</script>
+<script src="../assets/play.js?v=42247ce2" defer></script>
+</main>
+<footer class="foot">
+  <p class="foot-line">A fan reference. Not affiliated with Brad Pitt, Plan B, or any studio. Titles and artwork belong to their owners and appear here for identification and commentary.</p>
+  <p class="foot-links"><a href="../">Home</a> <a href="../stats/">The ledger</a> <a href="../about/">About</a> <a href="../about/#corrections">Send a correction</a></p>
+  <p class="foot-line">Spoilers stay sealed until you ask. Updated 2026-09-26.</p>
+</footer>
+<script src="../assets/site.js?v=c7ed0ea5" defer></script>
+</body>
+</html>

@@ -123,6 +123,7 @@ def header(depth: int = 0) -> str:
     return f"""<header class="top">
   <a class="wordmark" href="{base}" aria-label="{SITE_NAME} home"><span class="wm-mark" aria-hidden="true">?</span>Does Brad Pitt <span class="wm-q">die?</span></a>
   <nav class="topnav" aria-label="Primary">
+    <a href="{base}play/" class="nav-play">Play</a>
     <a href="{base}#films">The archive</a>
     <a href="{base}stats/">The ledger</a>
     <a href="{base}about/">About</a>
@@ -135,7 +136,7 @@ def header(depth: int = 0) -> str:
 <nav class="tabbar" aria-label="Quick actions">
   <a href="{base}#films"><span class="tb-ico" aria-hidden="true">▦</span>Archive</a>
   <a href="{base}stats/"><span class="tb-ico" aria-hidden="true">▤</span>Ledger</a>
-  <a href="{base}?surprise=1" data-surprise-link><span class="tb-ico" aria-hidden="true">✦</span>Surprise</a>
+  <a href="{base}play/"><span class="tb-ico" aria-hidden="true">▶</span>Play</a>
   <button type="button" data-seal-toggle aria-pressed="false"><span class="tb-ico" aria-hidden="true">◈</span><span class="when-sealed">Reveal all</span><span class="when-revealed">Seal all</span></button>
 </nav>
 <main id="main">
@@ -314,7 +315,7 @@ def build_index(films: list[dict]) -> str:
   <p class="page-kicker">Curious about the big picture?</p>
   <h2 class="closing-h">A career. A few close calls.</h2>
   <p class="closing-sub">Every ending across four decades, tallied. <span class="tease-n" data-count="{counts['dies']}">?</span> deaths, <span class="tease-n" data-count="{counts['survives']}">?</span> survivals, <span class="tease-n" data-count="{counts['ambiguous']}">?</span> complicated. The ledger contains spoilers.</p>
-  <a class="btn-primary" href="stats/">Open the spoiler ledger</a>
+  <div class="slide-cta"><a class="btn-primary" href="play/">Play today's challenge</a><a class="btn-ghost" href="stats/">Open the spoiler ledger</a></div>
 </section>
 """
     ld = {
@@ -569,6 +570,110 @@ def build_about(films: list[dict]) -> str:
     return head("About Does Brad Pitt Die?", "How the site works, how verdicts are decided, and how to send a correction.", "/about/", depth=1) + header(1) + body + footer(1)
 
 
+def build_play(films: list[dict]) -> str:
+    pool = [
+        {
+            "s": f["slug"], "t": f["title"], "y": f["year"], "ty": f["type"],
+            "p": ("../" + f["poster"]) if f["poster"] else None,
+            "c": f.get("character") or "", "r": f.get("role_size") or "",
+            "v": verdict_key(f), "vs": f.get("verdict_short") or "",
+        }
+        for f in films if not f.get("unreleased")
+    ]
+    data = json.dumps(pool, ensure_ascii=False).replace("</", "<\\/")
+    n = len(pool)
+    body = f"""<section class="play" data-play>
+  <div class="play-intro" id="intro">
+    <p class="page-kicker">The game</p>
+    <h1 class="page-h">Call the <em>ending</em></h1>
+    <p class="page-sub">Does he make it or not? Points for every right call, bonus for speed and for streaks. The clock runs only while a question is open.</p>
+
+    <div class="modes">
+      <article class="mode mode-daily">
+        <p class="mode-kicker">Daily challenge <span data-today></span></p>
+        <h2 class="mode-h">Ten titles. The same ten for everyone today.</h2>
+        <p class="mode-line" data-daily-status>Mixed questions: endings and characters.</p>
+        <div class="mode-cta"><button type="button" class="btn-primary" data-start="daily">Play today's ten</button><button type="button" class="btn-ghost" data-share-daily hidden>Share today</button></div>
+      </article>
+      <article class="mode">
+        <p class="mode-kicker">Beginning to end</p>
+        <h2 class="mode-h">All {n} titles, 1987 to now, in order.</h2>
+        <p class="mode-line" data-career-status>Leave whenever you like. Your run is saved where you stopped.</p>
+        <div class="mode-cta"><button type="button" class="btn-primary" data-start="career">Start the career run</button><button type="button" class="btn-ghost" data-continue hidden>Continue</button></div>
+      </article>
+      <article class="mode">
+        <p class="mode-kicker">Quick ten</p>
+        <h2 class="mode-h">Ten random titles. As often as you like.</h2>
+        <p class="mode-line" data-quick-status>Good for practice before the daily.</p>
+        <div class="mode-cta"><button type="button" class="btn-primary" data-start="quick">Deal ten</button></div>
+      </article>
+    </div>
+
+    <h2 class="archive-h play-sh">Your record</h2>
+    <div class="bignums play-stats" data-stats></div>
+    <div class="reset-row">
+      <button type="button" class="reseal" data-reset>Reset scores</button>
+      <div class="reset-confirm" data-reset-confirm hidden>
+        <span>This clears every score, time, streak and your saved run.</span>
+        <button type="button" class="btn-primary" data-reset-yes>Clear everything</button>
+        <button type="button" class="btn-ghost" data-reset-no>Keep them</button>
+      </div>
+    </div>
+    <p class="seal-fine">Heads up: the game shows answers as you play. Scores live on this device only.</p>
+  </div>
+
+  <div class="play-game" id="game" hidden>
+    <div class="hud">
+      <span class="hud-mode" data-mode-label></span>
+      <span class="hud-cell"><small>Question</small><b data-q>1 / 10</b></span>
+      <span class="hud-cell"><small>Score</small><b data-score>0</b></span>
+      <span class="hud-cell"><small>Time</small><b data-time>0:00.0</b></span>
+      <button type="button" class="reseal hud-quit" data-quit>Quit</button>
+    </div>
+    <div class="progress" aria-hidden="true"><i data-progress></i></div>
+    <div class="q-card">
+      <div class="q-poster" data-poster-box></div>
+      <div class="q-body">
+        <p class="q-meta" data-meta></p>
+        <h2 class="q-title" data-title></h2>
+        <p class="q-prompt" data-prompt></p>
+        <div class="q-opts" data-opts role="group"></div>
+        <div class="q-feedback" data-feedback hidden aria-live="polite">
+          <p class="fb-call" data-fb-call></p>
+          <p class="fb-text" data-fb-text></p>
+          <button type="button" class="btn-primary" data-next>Next</button>
+        </div>
+        <p class="combo" data-combo aria-live="polite"></p>
+        <p class="seal-fine q-keys">Keys: 1, 2, 3 or 4 to answer. Enter for next.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="play-result" id="result" hidden>
+    <p class="page-kicker" data-r-kicker></p>
+    <h2 class="page-h" data-r-title></h2>
+    <div class="bignums">
+      <div class="bignum"><span class="bn-n" data-r-score></span><span class="bn-l">points</span></div>
+      <div class="bignum"><span class="bn-n" data-r-correct></span><span class="bn-l">right calls</span></div>
+      <div class="bignum"><span class="bn-n" data-r-time></span><span class="bn-l">on the clock</span></div>
+      <div class="bignum"><span class="bn-n" data-r-combo></span><span class="bn-l">best streak</span></div>
+    </div>
+    <p class="r-best" data-r-best></p>
+    <p class="r-grid" data-r-grid aria-label="Your answers"></p>
+    <div class="slide-cta">
+      <button type="button" class="btn-primary" data-share>Share result</button>
+      <button type="button" class="btn-ghost" data-again>Play again</button>
+      <button type="button" class="btn-ghost" data-menu>All modes</button>
+    </div>
+    <p class="seal-fine" data-share-msg aria-live="polite"></p>
+  </div>
+</section>
+<script type="application/json" id="quiz-data">{data}</script>
+<script src="../assets/play.js?v={_hash('play.js')}" defer></script>
+"""
+    return head("Play: Does Brad Pitt Die? The game", "A daily challenge, a full career run and quick rounds. Call whether Brad Pitt makes it, against the clock.", "/play/", depth=1) + header(1) + body + footer(1)
+
+
 def build_404() -> str:
     body = """<section class="about">
   <p class="page-kicker">404</p>
@@ -634,7 +739,7 @@ def main() -> None:
         shutil.rmtree(DIST)
     DIST.mkdir()
     (DIST / "assets").mkdir()
-    for name in ("site.css", "site.js", "favicon.svg"):
+    for name in ("site.css", "site.js", "play.js", "favicon.svg"):
         target = DIST / ("assets" / Path(name) if name != "favicon.svg" else Path(name))
         shutil.copy(SRC / "static" / name, target)
     posters = DATA / "posters"
@@ -648,6 +753,7 @@ def main() -> None:
         write(DIST / "film" / f["slug"] / "index.html", build_film(f))
     write(DIST / "stats" / "index.html", build_stats(films))
     write(DIST / "about" / "index.html", build_about(films))
+    write(DIST / "play" / "index.html", build_play(films))
     write(DIST / "404.html", build_404())
     # the back room: unlisted notes with comments
     import blog
@@ -685,7 +791,7 @@ def main() -> None:
                 im.thumbnail((800, 450), Image.LANCZOS)
                 im.save(m, "WEBP", quality=74, method=6)
             shutil.copy(m, DIST / "stills" / m.name)
-    urls = ["/", "/stats/", "/about/"] + [f"/film/{f['slug']}/" for f in films]
+    urls = ["/", "/play/", "/stats/", "/about/"] + [f"/film/{f['slug']}/" for f in films]
     write(
         DIST / "sitemap.xml",
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
